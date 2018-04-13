@@ -1,0 +1,8 @@
+easy_admin_bundle:
+    resource: '@EasyAdminBundle/Controller/AdminController.php'
+    prefix: /admin
+    type: annotation
+#fos_user_register:
+#    resource: '@EasyAdminBundle/Controller/AdminController.php'
+#        prefix: /register
+#        type: annotation
