@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,23 @@ class Category
      */
     private $name;
 
+    //ajout de la jointure entre la table category et la table menu
+
+    /**
+     * @ORM\OneToMany(targetEntity="Menu", mappedBy="category")
+     */
+    private $menus;
+
+    public function __construct()
+    {
+        $this->menus = new ArrayCollection();
+    }
+
+    public function getMenus()
+    {
+        return $this->menus;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -36,5 +54,14 @@ class Category
         $this->name = $name;
 
         return $this;
+    }
+//    public  function  __toString($object)
+//    {
+//        return $object instanceof  Category
+//            ? $object->getName()
+//            : 'Category';
+//    }
+    public function __toString() {
+        return $this->name;
     }
 }

@@ -26,6 +26,22 @@ class Menu
     */
     private $price;
 
+    //Ajout de la jointure entre la table menu et category
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="menus")
+     */
+    private $category;
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
     public function getId()
     {
         return $this->id;
@@ -52,6 +68,9 @@ class Menu
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+    public function __toString() {
+        return $this->name;
     }
 
 }

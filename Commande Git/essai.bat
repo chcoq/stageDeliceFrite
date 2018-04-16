@@ -1,12 +1,13 @@
 @ECHO OFF
+set /P choix="n"
+SET /P choix="Voullez vous mettre a jour la base o/n : "
 
-echo. 1 -> symfony 3.
-echo. 2 -> symfony 4.
-SET /P "choix"="Choisissez le symfony " 
-IF %choix%==1(
-echo symfony3)
-IF %choix%==2(
-echo symfony4)
+IF %choix% EQU "o"( echo "Mise a jour de la base de donnes")
+IF "%choix"==n( echo "Bye!")
 pause
-PING LOCALHOST -n 3 >nul
-exit
+pause
+pause
+pause
+
+pause
+pause
