@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +32,21 @@ class Menu
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="menus")
      */
     private $category;
+    /**
+     * Many Menus have Many Products.
+     * @ORM\ManyToMany(targetEntity="Product", inversedBy="menus")
+     * @ORM\JoinTable(name="menu_products")
+     */
+    private $products;
+
+    public  function  __construct()
+    {
+        $this->products = new ArrayCollection();
+
+    }
+    //fin de la jointure
+
+    //ajout de la jointure  entre la table menu et la table produid
 
     public function getCategory()
     {
@@ -41,6 +57,24 @@ class Menu
     {
         $this->category = $category;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * @param mixed $products
+     */
+    public function setProducts($products)
+    {
+        $this->products = $products;
+    }
+
+    //fin de la jointure
 
     public function getId()
     {
