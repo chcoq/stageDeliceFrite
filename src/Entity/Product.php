@@ -20,7 +20,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $tile;
+    private $title;
 
     //jointure entre les tables menu et product
 
@@ -58,19 +58,19 @@ class Product
         return $this->id;
     }
 
-    public function getTile(): ?string
+    public function getTitle(): ?string
     {
-        return $this->tile;
+        return $this->title;
     }
 
-    public function setTile(string $tile): self
+    public function setTitle(string $title): self
     {
-        $this->tile = $tile;
+        $this->title = $title;
 
         return $this;
     }
 
     public function __toString() {
-        return $this->tile;
+        return $this->title;
     }
 }

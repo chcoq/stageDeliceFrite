@@ -20,7 +20,7 @@ class Category
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    private $nameCat;
 
     //ajout de la jointure entre la table category et la table menu
 
@@ -44,14 +44,14 @@ class Category
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNameCat(): ?string
     {
-        return $this->name;
+        return $this->nameCat;
     }
 
-    public function setName(string $name): self
+    public function setNameCat(string $nameCat): self
     {
-        $this->name = $name;
+        $this->nameCat = $nameCat;
 
         return $this;
     }
@@ -62,6 +62,6 @@ class Category
 //            : 'Category';
 //    }
     public function __toString() {
-        return $this->name;
+        return $this->nameCat;
     }
 }
