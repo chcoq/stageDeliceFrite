@@ -32,6 +32,13 @@ class Product
      */
 
     private  $menus;
+    /**
+     * One Product has One Image.
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id", nullable=true)
+     */
+    private $image;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
@@ -45,6 +52,8 @@ class Product
         return $this->menus;
     }
 
+    //fin de la jointure
+
     /**
      * @param mixed $menus
      */
@@ -53,7 +62,22 @@ class Product
         $this->menus = $menus;
     }
 
-    //fin de la jointure
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
 
     public function getId()
     {
