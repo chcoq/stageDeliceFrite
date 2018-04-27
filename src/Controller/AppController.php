@@ -11,55 +11,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends  Controller
 {
     /**
-     * @Route("/menu", name="menu")
+     * @Route("/accueil", name="homePage")
      */
-
-    public function menu(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-//        $menus = $em->getRepository('App:Menu')->findBy(['name'=>'Fricadelle']);
-        $menus = $em->getRepository('App:Menu')->findAll();//Select * from Menu
-        $cats = $em->getRepository('App:Category')->findAll();//Select * from Menu
-
-
-        return $this-> render('/menu.html.twig',[
-            'menus'=>$menus,
-            'cats'=>$cats
-        ]);
-    }
-
-    /**
-     * @Route("/seul", name="seul")
-     */
-
-    public function seul(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $menus = $em->getRepository('App:Menu')->findAll();//Select * from Menu
-        $cats = $em->getRepository('App:Category')->findAll();//Select * from Menu
-        return $this-> render('/seul.html.twig',[
-            'menus'=>$menus,
-            'cats'=>$cats
-        ]);
-    }
-
-    /**
-     * @Route("/americain", name="americain")
-     */
-
-    public function americain(Request $request)
+    public function accueil(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $menus = $em->getRepository('App:Menu')->findAll();//Select * from Menu
         $cats = $em->getRepository('App:Category')->findAll();//Select * from Menu
         $prods = $em->getRepository('App:Product')->findAll();
 
-        return $this-> render('/americain.html.twig',[
+        return $this-> render('/Accueil.html.twig',[
             'menus'=>$menus,
             'cats'=>$cats,
             'prods'=>$prods
         ]);
     }
+
+
 
 }
 
