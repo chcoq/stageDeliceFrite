@@ -6,11 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Menu
+ * @ORM\Table("menu")
  * @ORM\Entity(repositoryClass="App\Repository\MenuRepository")
  */
 class Menu
 {
     /**
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
