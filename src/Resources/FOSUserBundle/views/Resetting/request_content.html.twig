@@ -1,11 +1,16 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<link href="{{ asset('dist/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('css/signin.css') }}" rel="stylesheet">
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+<div class="text-center">
+<form class="form-signin" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
     <div>
-        <label for="username">{{ 'resetting.request.username'|trans }}</label>
-        <input type="text" id="username" name="username" required="required" />
+        <label for="username" class="sr-only">></label>
+        <input type="text" id="username" name="username" required="required" class="form-control" placeholder="{{ 'resetting.request.username'|trans }}"/>
     </div>
+    <br/>
     <div>
-        <input type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
     </div>
 </form>
+</div>
