@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="user")
  */
 class User extends BaseUser
 {
@@ -17,6 +18,10 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      */
     protected $id;
+    /**
+     * @ORM\Column(type="string", length=255 ,nullable=true)
+     */
+    protected $name;
 
     public function __construct()
     {
@@ -24,25 +29,20 @@ class User extends BaseUser
         // your own logic
     }
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-//    private $name;
-//
-//    public function getId()
-//    {
-//        return $this->id;
-//    }
-//
-//    public function getName(): ?string
-//    {
-//        return $this->name;
-//    }
-//
-//    public function setName(string $name): self
-//    {
-//        $this->name = $name;
-//
-//        return $this;
-//    }
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }
