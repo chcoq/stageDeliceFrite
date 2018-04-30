@@ -80,4 +80,8 @@ class MenuController extends Controller
     /*
      * SELECT name_cat, name, price FROM menu INNER JOIN category on category.id = menu.category_id WHERE name_cat='seul'
      */
+
+
+
+
 }
