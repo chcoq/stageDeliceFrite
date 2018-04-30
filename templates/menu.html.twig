@@ -2,52 +2,40 @@
 
 {% block title %}Menu{% endblock %}
 {% block body %}
-
-
     {% for menu in menus %}
-       {%  set counter = ( counter | default(0) ) + 1%}
+        {%  set counter = ( counter | default(0) ) + 1%}
         {% if counter == 1 %}
-        <h1>{{ menu.category.namecat }} </h1>
-            {% endif %}
-
-
-
+            <h1>{{ menu.category.namecat }} </h1>
+        {% endif %}
         <div class="bar">
             <span class="left">
-                <h4>{{ menu.name|upper }}</h4>
+                <h4><a href="/description/{{ menu.id }}">{{ menu.name|upper }}</a></h4>
+
             </span>
             <span class="right">
                 {{ menu.price|number_format(2,',',' ') }}€
             </span>
             {% for menu in menu.products %}
                 <span class="titleProduct">
-                <button type="button" class="btn btn-secondary btn-sm">Description</button>
-                <button type="button" class="btn btn-success btn-sm"  >  Ajouter</button>
-                    {{ menu.title }}
-                    {#images/{{ menu.image.path }}#}
-                    {{menu.image.path}}
-                    <img  src="{{ asset ('images/')}}{{ menu.image.path }}">
+                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"  title="Description">Description</button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"  title="Add to panier" > Add </button>
+                        <img  src="{{ asset ('images/')}}{{ menu.image.path }}" alt="{{ menu.image.alt }}"/>
                 </span>
                 <br>
             {% endfor %}
-
         </div>
         {#<br/>#}
-
-        {% endfor %}
-
+    {% endfor %}
     {#{% for menu in menus %}#}
-            {#{{ dump(menu) }}#}
-        {#{% if  menu.category.namecat == "Seul" %}#}
-            {#<div class="bar">#}
-                {#<span class="left">{{ menu.name|upper }} </span> <span class="right">{{ menu.price|number_format(2,',',' ') }}€</span><br/>#}
-                {#<span class="bar"></span>#}
-            {#</div>#}
-            {#{% endif %}#}
-
-            {#<a href="{{ path('article_display', {'slug': article.slug}) }}">Voir le détail</a><br />#}
-            {#<a href="{{ path('ajout_article_panier', {'idArticle': article.id}) }}">Ajouter au panier</a><br />#}
-            {#<a href="{{ path('article_delete', {'id': article.id}) }}">Supprimer</a>#}
-
+    {#{{ dump(menu) }}#}
+    {#{% if  menu.category.namecat == "Seul" %}#}
+    {#<div class="bar">#}
+    {#<span class="left">{{ menu.name|upper }} </span> <span class="right">{{ menu.price|number_format(2,',',' ') }}€</span><br/>#}
+    {#<span class="bar"></span>#}
+    {#</div>#}
+    {#{% endif %}#}
+    {#<a href="{{ path('article_display', {'slug': article.slug}) }}">Voir le détail</a><br />#}
+    {#<a href="{{ path('ajout_article_panier', {'idArticle': article.id}) }}">Ajouter au panier</a><br />#}
+    {#<a href="{{ path('article_delete', {'id': article.id}) }}">Supprimer</a>#}
     {#{% endfor %}#}
 {% endblock %}

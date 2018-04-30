@@ -1,0 +1,19 @@
+body{
+    background-color: yellow;
+}
+div
+{
+    border: 1px solid black;
+}
+img
+{
+    /*height: 300px;*/
+    margin: 2%;
+    width: 99%;
+    box-shadow:7px 7px 11px #181818;
+}
+
+h3
+{
+    text-align: center;
+}

@@ -21,14 +21,20 @@ class Menu
     private $id;
 
     /**
- * @ORM\Column(type="string", length=50)
- */
+     * @ORM\Column(type="string", length=50)
+     */
     private $name;
 
     /**
     * @ORM\Column(type="float")
     */
     private $price;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
 
     //Ajout de la jointure entre la table menu et category
     /**
@@ -106,6 +112,24 @@ class Menu
     {
         $this->price = $price;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
     public function __toString() {
         return $this->name;
     }

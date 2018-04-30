@@ -81,7 +81,17 @@ class MenuController extends Controller
      * SELECT name_cat, name, price FROM menu INNER JOIN category on category.id = menu.category_id WHERE name_cat='seul'
      */
 
+    /**
+     * @Route("/description/{id}", name="description")
+     */
+    public function description($id)
+    {
+       $em = $this->getDoctrine()->getManager();
+       $description = $em->getRepository('App:Menu')->find($id);
 
+       if (!$description) throw  $this->createNotFoundException('La page n\'existe pas.');
 
+        return $this-> render('description.html.twig',['description' => $description]);
+    }
 
 }
