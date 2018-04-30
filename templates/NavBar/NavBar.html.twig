@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     {#<a class="navbar-brand" href="#">Expand at md</a>#}
-    <a href="{{ path('menu') }}"><img src="{{ asset('images/logoFrite.png') }}"></a>
+    <a href="{{ path('homePage') }}"><img class="ico" src="{{ asset('images/logoFrite.png') }}"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
             aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('menu') }}">Accueil <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ path('homePage') }}">Accueil <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{#{{  path('photo') }}#}">Photos</a>
@@ -21,17 +21,26 @@
                 <a class="nav-link" href="{#{{ path('info') }}#}">Info Pratique</a>
             </li>
             {#liste des menus#}
+
+
+
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">Menus</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                     <a class="dropdown-item" href="{{ path('seul') }}">Seul</a>
-                    <a class="dropdown-item" href="">Sandwich</a>
+                    <a class="dropdown-item" href="{{ path('sandwich') }}">Sandwich</a>
                     <a class="dropdown-item" href="{{ path('americain') }}">Americain</a>
                 </div>
             </li>
-            {#liste des actions de l'administarteur#}
-            {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
+
+{{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
+
+            {#{% include'NavBar/Menus.html.twig' %}#}
+
+           {#liste des actions de l'administarteur#}
+        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
                 {#<li class="nav-item dropdown">#}
                     {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"#}
                        {#aria-haspopup="true" aria-expanded="false">Admin </a>#}
@@ -44,25 +53,30 @@
             {#{% endif %}#}
         </ul>
         {#bouton login et logout#}
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <span class="navbar-text">
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-        </span>
-
+                <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px; float:" >
+                    <li class="nav-item">
+                    <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
+                    </li>
+                    <li class="nav-item"  style="float: right">
                 <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
-                    <span class="navbar-text">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </span>
-                </a>
 
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+
+                </a>
+                </li>
+                </ul >
             {% else %}
+
                 <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    <a href="{{ path('fos_user_security_login') }}"><span class="navbar-text">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
+                    <span class="navbar-text"> / </span>
+                    <a href="{{ path('fos_user_registration_register') }}"><span class="navbar-text">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
                 </li>
             {% endif %}
-        {% endif %}
+        {#{% endif %}#}
 
         {#essai d'un autre template#}
 

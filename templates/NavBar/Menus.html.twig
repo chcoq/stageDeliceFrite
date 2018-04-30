@@ -1,0 +1,19 @@
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Menus</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                    {% for category in categorys %}
+                    <a class="dropdown-item" href="/menu/{{ category.id }}">{{ category.namecat }}</a>
+                    {% endfor %}
+
+                    {#<a class="dropdown-item" href="" > aaaaaa</a>#}
+                    {#<a class="dropdown-item" href="{{ path('seul') }}">Seul</a>#}
+                    {#<a class="dropdown-item" href="{{ path('sandwich') }}">Sandwich</a>#}
+                    {#<a class="dropdown-item" href="{{ path('americain') }}">Americain</a>#}
+
+
+                </div>
+            </li>
+

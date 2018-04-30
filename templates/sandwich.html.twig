@@ -3,10 +3,10 @@
 {% block title %}Menu{% endblock %}
 {% block body %}
 
-    <h1>Les Américains</h1>
+    <h1>Les Sandwichs</h1>
 
     {% for menu in menus %}
-        {% if  menu.category.namecat == "Americain" %}
+        {% if  menu.category.namecat == "Sandwich" %}
             <div class="bar">
                 <span class="left">{{ menu.name|upper }} </span> <span
                         class="right">{{ menu.price|number_format(2,',',' ') }}€</span><br/>
