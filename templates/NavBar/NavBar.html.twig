@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     {#<a class="navbar-brand" href="#">Expand at md</a>#}
-    <a href="{{ path('homePage') }}"><img class="ico" src="{{ asset('images/logoFrite.png') }}"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
-            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    {#<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"#}
+    {#aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">#}
+    {#<span class="navbar-toggler-icon"></span>#}
+    {#</button>#}
 
     <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
+            <a href="{{ path('homePage') }}"><img class="ico" src="{{ asset('images/logoFrite.png') }}"></a>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('homePage') }}">Accueil <span class="sr-only">(current)</span></a>
             </li>
@@ -20,22 +20,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="{#{{ path('info') }}#}">Info Pratique</a>
             </li>
+            {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
+            {#{{ render(controller('App\\Controller\\MenuController::recherche')) }}#}
+
             {#liste des menus#}
 
 
+            {#Ancien Menu deroulant menu#}
 
+            {#<li class="nav-item dropdown">#}
+            {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"#}
+            {#aria-haspopup="true" aria-expanded="false">Menus</a>#}
+            {#<div class="dropdown-menu" aria-labelledby="dropdown04">#}
+            {#<a class="dropdown-item" href="{{ path('seul') }}">Seul</a>#}
+            {#<a class="dropdown-item" href="{{ path('sandwich') }}">Sandwich</a>#}
+            {#<a class="dropdown-item" href="{{ path('americain') }}">Americain</a>#}
+            {#</div>#}
+            {#</li>#}
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Menus</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown04">
-                    <a class="dropdown-item" href="{{ path('seul') }}">Seul</a>
-                    <a class="dropdown-item" href="{{ path('sandwich') }}">Sandwich</a>
-                    <a class="dropdown-item" href="{{ path('americain') }}">Americain</a>
-                </div>
-            </li>
-
-{{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
 
             {#{% include'NavBar/Menus.html.twig' %}#}
 
@@ -55,7 +57,7 @@
         {#bouton login et logout#}
         {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px; float:" >
+                <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px;" >
                     <li class="nav-item">
                     <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
             {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>

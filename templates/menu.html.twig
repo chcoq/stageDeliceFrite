@@ -1,39 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Menu{% endblock %}
+{#{% block stylesheets %}#}
+    {#<style >div{#}
+        {#border: 1px solid black }#}
+{#</style>#}
+{#{% endblock%}#}
 {% block body %}
+    <div class="container" >
     {% for menu in menus %}
-        {%  set counter = ( counter | default(0) ) + 1%}
+        {% set counter = ( counter | default(0) ) + 1 %}
         {% if counter == 1 %}
-            <h1>{{ menu.category.namecat }} </h1>
+            <div class="row">
+                <div class="col">
+                    <h1>{{ menu.category.namecat }} </h1>
+                </div>
+            </div>
         {% endif %}
-        <div class="bar">
-            <span class="left">
-                <h4><a href="/description/{{ menu.id }}">{{ menu.name|upper }}</a></h4>
-
-            </span>
-            <span class="right">
-                {{ menu.price|number_format(2,',',' ') }}€
-            </span>
-            {% for menu in menu.products %}
-                <span class="titleProduct">
-                    <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"  title="Description">Description</button>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"  title="Add to panier" > Add </button>
-                        <img  src="{{ asset ('images/')}}{{ menu.image.path }}" alt="{{ menu.image.alt }}"/>
-                </span>
-                <br>
-            {% endfor %}
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="titreMenuContainer">
+                    <span class="left">
+                        <h4><a href="/description/{{ menu.id }}">{{ menu.name|upper }}</a></h4>
+                    </span>
+                    <span class="right">
+                        {{ menu.price|number_format(2,',',' ') }}€
+                    </span>
+                </div>
+            </div>
+            <div class="col-2"></div>
         </div>
-        {#<br/>#}
+        <div class="row"><div class="col"><div><br></div></div></div>
+
+        {#{% for menu in menu.products %}#}
+        {#<span class="titleProduct">#}
+        {#<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"  title="Description">Description</button>#}
+        {#<button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"  title="Add to panier" > Add </button>#}
+        {#<img  src="{{ asset ('images/')}}{{ menu.image.path }}" alt="{{ menu.image.alt }}"/>#}
+        {#</span>#}
+        {#<br>#}
+        {#{% endfor %}#}
     {% endfor %}
-    {#{% for menu in menus %}#}
-    {#{{ dump(menu) }}#}
-    {#{% if  menu.category.namecat == "Seul" %}#}
-    {#<div class="bar">#}
-    {#<span class="left">{{ menu.name|upper }} </span> <span class="right">{{ menu.price|number_format(2,',',' ') }}€</span><br/>#}
-    {#<span class="bar"></span>#}
-    {#</div>#}
-    {#{% endif %}#}
+    </div>
     {#<a href="{{ path('article_display', {'slug': article.slug}) }}">Voir le détail</a><br />#}
     {#<a href="{{ path('ajout_article_panier', {'idArticle': article.id}) }}">Ajouter au panier</a><br />#}
     {#<a href="{{ path('article_delete', {'id': article.id}) }}">Supprimer</a>#}

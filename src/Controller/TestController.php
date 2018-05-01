@@ -38,11 +38,10 @@ class TestController extends Controller
        ('Nom'=>'Lecocq',
         'Prenom'=>'David',
         'sexe'=> '1',
-        'Age'=> new \DateTime("1982-02-02"),
+        'DateDe_Naissance'=> new \DateTime("1982-02-02"),
           'Pays'=>"FR",
           'Adresse'=>"14 rue des Glaïeuls",
          'CodePostal'=>"62000",
-//          'DateDe_Naissance',
 
 
       ));
@@ -51,7 +50,7 @@ class TestController extends Controller
 
 
         return $this->render('/test.html.twig',array(
-            'form' => $form -> createView(),
+            'essai' => $form -> createView(),
         ));
 
     }

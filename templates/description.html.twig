@@ -19,10 +19,18 @@
                 </div>
                 <div class="row">
                     <div class="col-6"> {{ description.price|number_format(2,',',' ') }}€</div>
-                    <div class="col-6">Panier  </div>
+                    <div class="col-6">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            Panier
+                        {% endif %}
+                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col">{{ description.description|raw }}</div>
+                    <div class="col">
+                        <br>
+                        {{ description.description|raw }}
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col">
@@ -43,19 +51,18 @@
                         </div>
                     </div>
                     <div class="col">
-                        <form action="panier.php">
+                        {# ajouter un menu deroulant plus le bouton ajouter produit#}
 
-
-                            <select name="qte" class="span1">
-                                {% for i in 1..10 %}
-                                <option>{{ i }}</option>
-{% endfor %}
-                            </select>
-
-                            <div>
-                                <button class="btn btn-primary">Ajouter au panier</button>
-                            </div>
-                        </form>
+                        {#<form action="panier.php">#}
+                            {#<select name="qte" class="span1">#}
+                                {#{% for i in 1..10 %}#}
+                                {#<option>{{ i }}</option>#}
+                                {#{% endfor %}#}
+                            {#</select>#}
+                            {#<div>#}
+                                {#<button class="btn btn-primary">Ajouter au panier</button>#}
+                            {#</div>#}
+                        {#</form>#}
                     </div>
                 </div>
                 </div>

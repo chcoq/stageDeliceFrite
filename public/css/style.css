@@ -1,20 +1,24 @@
 body {
     /*background-image: url("../images/frite.jpg");*/
     background-size: auto ;
-    background-color: lime;
+    background-color: #878787;
 }
-
+a{
+    text-decoration:none!important;
+}
 .ico {
     width: 30px;
 }
 
 .left {
-    text-align: start;
+    display:flex;
 }
 
 .right {
-    float: right;
-    /*text-align: end;*/
+    display:flex;
+    align-self: flex-end;
+    /*vertical-align: text-bottom !important;*/
+
 }
 
 h1 {
@@ -40,4 +44,33 @@ li{
 img
 {
     /*width: 100px;*/
+}
+.titreMenuContainer
+{
+    width: 100%;
+display: inline-flex;
+    justify-content: space-between;
+    border-bottom: 2px black dotted;
+    border-radius: 2px;
+}
+
+h4 a/* utiliser dans les menus*/
+{
+
+    color: #343a40 !important;
+}
+h4 a:hover {
+    color: #f8f9fa !important;
+}
+h4 a:visited
+{
+    color: #5c5c5c;
+}
+
+.container
+{
+    background-image: url("../images/frite.jpg")!important;
+    /*opacity: 0.75;*/
+    box-shadow:0 0 20px 3px black;
+    width: 100%;
 }

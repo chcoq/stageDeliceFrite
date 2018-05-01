@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Form\RechercheType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,6 @@ class MenuController extends Controller
         $menus = $em->getRepository('App:Menu')->findAll();//Select * from Menu
         $cats = $em->getRepository('App:Category')->findAll();//Select * from Menu
 
-
         return $this->render('/menu.html.twig', [
             'menus' => $menus,
             'cats' => $cats
@@ -38,6 +38,7 @@ class MenuController extends Controller
         $em = $this->getDoctrine()->getManager();
         $menus = $em->getRepository('App:Menu')->findAll();//Select * from Menu
         $cats = $em->getRepository('App:Category')->findAll();//Select * from Menu
+
         return $this-> render('/seul.html.twig',[
             'menus'=>$menus,
             'cats'=>$cats
