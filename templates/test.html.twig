@@ -1,8 +1,7 @@
-<html>
-<body>
+{% extends 'base.html.twig' %}
+{% block body %}
 {{ form_start(essai,{'action': ('test') ,'method':'post'} ) }}
 {{ form_widget(essai) }}
 {{ form_end(essai) }}
 
-</body>
-</html>
+{% endblock %}

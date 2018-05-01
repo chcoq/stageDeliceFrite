@@ -51,13 +51,7 @@ class MenuRepository extends ServiceEntityRepository
 
     public function byMenu($category)
     {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.categoryId = :category')
-//            ->setParameter('category', $category)
-//            ->orderBy('m.id')
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//            ;
+
         $qb= $this->createQueryBuilder('m')
             ->andWhere('m.category = :category')
             ->setParameter('category',$category)
@@ -66,5 +60,16 @@ class MenuRepository extends ServiceEntityRepository
 
         return $qb->execute();
 
+    }
+
+    public function recherche($request)
+    {
+        $qb= $this->createQueryBuilder('m')
+            ->andWhere('m.name like :% request %')
+            ->setParameter('request',$request)
+            ->orderBy('m.id')
+            ->getQuery();
+
+        return $qb->execute();
     }
 }

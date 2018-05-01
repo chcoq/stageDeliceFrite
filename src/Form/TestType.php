@@ -34,7 +34,7 @@ class TestType extends AbstractType
                                                             'preferred_choices'=>array('0')))
             ->add('Age',DateType::class, array('widget' => 'single_text',))
             ->add('Pays',CountryType::class,array('preferred_choices'=>array('FR','GB')))
-            ->add('Adresse')
+            ->add('Adresse',TextType::class)
             ->add('CodePostal')
             ->add('DateDe_Naissance')
             ->add('Produits',EntityType::class,array('class' =>'App\Entity\Product' ))

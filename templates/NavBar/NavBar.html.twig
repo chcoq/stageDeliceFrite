@@ -1,13 +1,22 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    {#<a class="navbar-brand" href="#">Expand at md</a>#}
-    {#<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"#}
-    {#aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">#}
-    {#<span class="navbar-toggler-icon"></span>#}
-    {#</button>#}
+{#test de mise en forme#}
+{#<style>#}
+    {#div{ border : 1px solid black;}#}
+    {#ul{ border : 1px solid red;}#}
+    {#li{ border : 1px solid yellow;}#}
+    {#a{ border : 1px solid blue;}#}
+    {#nav{ border : 3px solid green;}#}
+{#</style>#}
 
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a href="{{ path('homePage') }}"><img class="ico" src="{{ asset('images/logoFrite.png') }}"></a>
+    {# bouton toggle#}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
+            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+{#lien vers différentes pages#}
     <div class="collapse navbar-collapse" id="navbarsExample04">
         <ul class="navbar-nav mr-auto">
-            <a href="{{ path('homePage') }}"><img class="ico" src="{{ asset('images/logoFrite.png') }}"></a>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('homePage') }}">Accueil <span class="sr-only">(current)</span></a>
             </li>
@@ -20,86 +29,47 @@
             <li class="nav-item">
                 <a class="nav-link" href="{#{{ path('info') }}#}">Info Pratique</a>
             </li>
+{#lien pour aller sur la page admin          #}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li class="nav-item"><a class="nav-link" href="{{ path('admin') }}">Admin</a></li>
+            {% endif %}
+{#rendu du menu déroulants des menus#}
             {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
+{#barre de recherche en cour de développement #}
             {#{{ render(controller('App\\Controller\\MenuController::recherche')) }}#}
-
-            {#liste des menus#}
-
-
-            {#Ancien Menu deroulant menu#}
-
+{#menu pour l'administrateur en cour de développement#}
+            {#liste des actions de l'administarteur#}
+            {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
             {#<li class="nav-item dropdown">#}
             {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"#}
-            {#aria-haspopup="true" aria-expanded="false">Menus</a>#}
+            {#aria-haspopup="true" aria-expanded="false">Admin </a>#}
             {#<div class="dropdown-menu" aria-labelledby="dropdown04">#}
-            {#<a class="dropdown-item" href="{{ path('seul') }}">Seul</a>#}
-            {#<a class="dropdown-item" href="{{ path('sandwich') }}">Sandwich</a>#}
-            {#<a class="dropdown-item" href="{{ path('americain') }}">Americain</a>#}
+            {#<a class="dropdown-item" href="#">Seul</a>#}
+            {#<a class="dropdown-item" href="#">Sandwich</a>#}
+            {#<a class="dropdown-item" href="#">Americain</a>#}
             {#</div>#}
             {#</li>#}
-
-
-            {#{% include'NavBar/Menus.html.twig' %}#}
-
-           {#liste des actions de l'administarteur#}
-        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-                {#<li class="nav-item dropdown">#}
-                    {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"#}
-                       {#aria-haspopup="true" aria-expanded="false">Admin </a>#}
-                    {#<div class="dropdown-menu" aria-labelledby="dropdown04">#}
-                        {#<a class="dropdown-item" href="#">Seul</a>#}
-                        {#<a class="dropdown-item" href="#">Sandwich</a>#}
-                        {#<a class="dropdown-item" href="#">Americain</a>#}
-                    {#</div>#}
-                {#</li>#}
             {#{% endif %}#}
         </ul>
-        {#bouton login et logout#}
-        {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px;" >
-                    <li class="nav-item">
-                    <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
-                    </li>
-                    <li class="nav-item"  style="float: right">
-                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
-
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-
-                </a>
-                </li>
-                </ul >
-            {% else %}
-
+{#bouton login et logout#}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px; float:" >
                 <li class="nav-item">
-                    <a href="{{ path('fos_user_security_login') }}"><span class="navbar-text">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
-                    <span class="navbar-text"> / </span>
-                    <a href="{{ path('fos_user_registration_register') }}"><span class="navbar-text">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
+                    <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
+                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
                 </li>
-            {% endif %}
-        {#{% endif %}#}
-
-        {#essai d'un autre template#}
-
-        {#<form class="form-inline my-2 my-lg-0">#}
-        {#<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">#}
-        {#<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
-        {#</form>#}
-
-
-        {#<form class="form-inline my-2 my-md-0">#}
-        {#<input class="form-control" type="text" placeholder="Search">#}
-        {#</form>#}
+                <li class="nav-item"  style="float: right">
+                    <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                </li>
+            </ul >
+        {% else %}
+            <li class="nav-item">
+                <a href="{{ path('fos_user_security_login') }}"><span class="navbar-text">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
+                <span class="navbar-text"> / </span>
+                <a href="{{ path('fos_user_registration_register') }}"><span class="navbar-text">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
+            </li>
+        {% endif %}
     </div>
-</nav>
-<nav>
-    {#<a href="{{ path('homepage') }}"><img src="{{ asset('images/logoFrite.png') }}"></a>#}
-    {#<li><a href="{{ path('homepage') }}">Accueil</a></li>#}
-    {#<li><a href="{{ path('menu') }}">Menu</a></li>#}
-    {#<li><a href="{{ path('photo') }}">Photos</a></li>#}
-    {#<li><a href="{{ path('contact') }}">Contact</a></li>#}
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li><a href="{{ path('admin') }}">Admin</a></li>
-    {% endif %}
 </nav>
