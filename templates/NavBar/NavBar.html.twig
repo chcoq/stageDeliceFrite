@@ -35,6 +35,8 @@
             {% endif %}
 {#rendu du menu déroulants des menus#}
             {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
+{#Menu Panier#}
+            {{ render(controller('App\\Controller\\PanierController::menu')) }}
 {#barre de recherche en cour de développement #}
             {#{{ render(controller('App\\Controller\\MenuController::recherche')) }}#}
 {#menu pour l'administrateur en cour de développement#}

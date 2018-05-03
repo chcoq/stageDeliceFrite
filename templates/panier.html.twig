@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {#<link rel="stylesheet" href="{{ asset('css/css/bootstrap.css') }}">#}
+    <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
+{% endblock %}
+{%  set totalHT = 0 %}
+{%  set totalTTC = 0 %}
+
+{#{% set refTva= [] %}#}
+{#{% set refTva = refTva|merge{{ ('%'~produit.tva.valeur):0 }} %}#}
+
+{% block body %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+    <h1> Votre panier </h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Références</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Total HT</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if menus|length == 0 %}
+                            <tr>
+                                <td colspan="4" style="text-align: center">Aucun article dans votre panier</td>
+                            </tr>
+                        {% endif %}
+                        {%  for menu in menus %}
+                        <tr>
+                            <form action="{{ path('ajouter',{'id':menu.id}) }}" method="get">
+                                <td>{{menu.name  }}</td>
+                                <td>
+                                    <select  name="qte" class="span1" onchange="this.form.submit()">
+                                        {%  for i in 1..10 %}
+                                        <option value="{{ i }}" {%  if i== panier[menu.id ] %}
+                                                                    selected="selected"
+                                                                {% endif %}>{{ i }}</option>
+                                        {% endfor %}
+                                    </select>&nbsp;&nbsp;
+                                    {#<a href="#"><i class="icon-refresh"></i></a>#}
+                                    <a href="{{ path('supprimer',{'id':menu.id}) }}"><i class="icon-trash"></i></a>
+                                </td>
+                                <td>{{ menu.price|number_format(2,',',' ') }}€ </td>
+                                <td>{{ (menu.price *panier[menu.id ])|number_format(2,',',' ')}}€</td>
+                            </form>
+                        </tr>
+                        {%  set totalHT = totalHT +(menu.price *panier[menu.id ])%}
+                            {% set totalTTC =totalTTC +(menu.price *panier[menu.id ]) %}
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% if menus|length != 0 %}
+                    <dl class="dl-horizontal pull-right">
+                        <dt>Total HT :</dt>
+                        <dd>{{ totalHT|number_format(2,',',' ') }}€</dd>
+
+                        <dt>TVA :</dt>
+                        <dd>200€</dd>
+
+                        <dt>Total:</dt>
+                        <dd>{{ totalTTC|number_format(2,',',' ') }}€</dd>
+                    </dl>
+                    <div class="clearfix"></div>
+                    <a href="livraison.php" class="btn btn-success pull-right">Valider mon panier</a>
+                {% endif %}
+
+                    {#<a href="{{ path('homePage') }}" class="btn btn-primary">Continuer mes achats</a>#}
+                    <a href="javascript:history.go(-1)" class="btn btn-primary">Continuer mes achats</a>
+
+            </div>
+        <div class="col-2"></div>
+
+      </div>
+{% endblock %}

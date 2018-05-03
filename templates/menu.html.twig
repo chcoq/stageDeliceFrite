@@ -7,8 +7,8 @@
 {#</style>#}
 {#{% endblock%}#}
 {% block body %}
-<br>
-    <div class="container" >
+    <br>
+    <div class="container">
 
         {% for menu in menus %}
             {% set counter = ( counter | default(0) ) + 1 %}
@@ -28,12 +28,21 @@
                         </span>
                         <span class="right">
                             {{ menu.price|number_format(2,',',' ') }}€
+                            {% if panier[menu.id] is not defined %}
+                                <a class="btn-outline-secondary btn-sm " href="{{ path('ajouter',{'id':menu.id}) }}" style="width: 16ch">Ajouter au panier</a>
+                            {% else %}
+                                <a class="btn-outline-secondary btn-sm " href="{{ path('panier') }}"   style="width: 16ch"> Déjà au panier   </a>
+                            {% endif %}
                         </span>
                     </div>
                 </div>
                 <div class="col-2"></div>
             </div>
-            <div class="row"><div class="col"><div><br></div></div></div>
+            <div class="row">
+                <div class="col">
+                    <div><br></div>
+                </div>
+            </div>
 
             {#{% for menu in menu.products %}#}
             {#<span class="titleProduct">#}

@@ -2,6 +2,12 @@ body {
     /*background-image: url("../images/frite.jpg");*/
     background-size: auto ;
     background-color: #878787;
+    padding-bottom: 40px;
+/*ajout de Ecommerce en test*/
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+
 }
 a{
     text-decoration:none!important;

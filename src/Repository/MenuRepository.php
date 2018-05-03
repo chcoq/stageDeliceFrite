@@ -72,4 +72,15 @@ class MenuRepository extends ServiceEntityRepository
 
         return $qb->execute();
     }
+
+    public function findArray($array)
+    {
+        $qb= $this->createQueryBuilder('m')
+            ->Where('m.id IN (:array)')
+            ->setParameter('array',$array)
+            ->getQuery();
+
+        return $qb->execute();
+
+    }
 }

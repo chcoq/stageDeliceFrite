@@ -26,15 +26,23 @@ class CategoryMenuController extends  Controller
     /**
      * @Route("/menu/{id}", name="category")
      */
-    public function menuCategory($id)
+    public function menuCategory(Request $request,$id)
     {
 //       $em = $this->getDoctrine()->getManager();
 //       $menus = $em->getRepository('App:Menu')->byCategoryMenu($category);
+        $session = $request->getsession();
         $menus =$this->getDoctrine()
             ->getRepository(Menu::class)
             ->byMenu($id);
+        if($session->has('panier'))
+            $panier = $session ->get('panier');
+        else
+            $panier=false;
 
-        return $this-> render('menu.html.twig',['menus' => $menus]);
+        if (!$menus) throw  $this->createNotFoundException('La page n\'existe pas.');
+
+        return $this-> render('menu.html.twig',['menus' => $menus,
+                                            'panier'=>$panier]);
     }
 
 }
