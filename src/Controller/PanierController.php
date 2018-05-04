@@ -27,29 +27,24 @@ class PanierController extends Controller
     /**
      * @Route("/ajouter/{id}",name="ajouter")
      */
-    public function ajouter(Request $request ,$id)
+    public function ajouter(Request $request, $id)
     {
         $session = $request->getsession();
 //$session->clear();  //permet d'affacer la session
-
-        if(!$session->has('panier')) $session->set('panier',array());
-        $panier= $session->get('panier');
-
-       //$panier[ID DU PRODUIT] =>Quantité
-
-        if(array_key_exists($id,$panier))
-        {
-            if ($request->query->get('qte') != null)$panier[$id]=$request->query->get('qte');
-            $this->get('session')->getFlashBag()->add('success','Quantité modifiée avec succés');
-
-        }else{
-            if($request->query->get('qte') !=null)
-                $panier[$id]=$request->query->get('qte');
+        if (!$session->has('panier')) $session->set('panier', array());
+        $panier = $session->get('panier');
+        //$panier[ID DU PRODUIT] =>Quantité
+        if (array_key_exists($id, $panier)) {
+            if ($request->query->get('qte') != null) $panier[$id] = $request->query->get('qte');
+            $this->get('session')->getFlashBag()->add('success', 'Quantité modifiée avec succés');
+        } else {
+            if ($request->query->get('qte') != null)
+                $panier[$id] = $request->query->get('qte');
             else
-            $panier[$id]=1;
-            $this->get('session')->getFlashBag()->add('success','Article ajouté avec succés');
+                $panier[$id] = 1;
+            $this->get('session')->getFlashBag()->add('success', 'Article ajouté avec succés');
         }
-        $session->set('panier',$panier);
+        $session->set('panier', $panier);
         return $this->redirectToRoute('panier');
 //ancienne version
 //       return $this-> redirect($this->generateUrl('panier'));
@@ -86,19 +81,20 @@ class PanierController extends Controller
             ->findArray(array_keys($session->get('panier')));
 
 //        if (!$menus) throw  $this->createNotFoundException('Le panier est vide.');
-
-
-
-
         return $this->render('panier.html.twig',array('menus'=>$menus ,
                                                             'panier' => $session->get('panier')));
     }
+    /**
+     * @Route("/livraison",name="livraison")
+     */
 
-    public function livraison()
+    public function  livraison()
     {
-        return $this->render('panier.html.twig');
+        return $this->render('livraison.html.twig');
     }
-
+    /**
+     * @Route("/validation",name="validation")
+     */
     public function validation()
     {
         return $this->render('panier.html.twig');

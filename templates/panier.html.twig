@@ -77,7 +77,7 @@
                         <dd>{{ totalTTC|number_format(2,',',' ') }}€</dd>
                     </dl>
                     <div class="clearfix"></div>
-                    <a href="livraison.php" class="btn btn-success pull-right">Valider mon panier</a>
+                    <a href="{{ path('livraison') }}" class="btn btn-success pull-right">Valider mon panier</a>
                 {% endif %}
 
                     {#<a href="{{ path('homePage') }}" class="btn btn-primary">Continuer mes achats</a>#}
