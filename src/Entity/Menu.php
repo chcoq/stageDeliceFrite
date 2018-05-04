@@ -34,7 +34,11 @@ class Menu
      * @ORM\Column(type="text")
      */
     private $description;
-
+//jointure entre menu et tva
+    /**
+     * @ORM\ManyToOne(targetEntity="Tva", inversedBy="menus",cascade={"persist","remove"})
+     */
+    private $tva;
 
     //Ajout de la jointure entre la table menu et category
     /**
@@ -132,6 +136,22 @@ class Menu
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTva()
+    {
+        return $this->tva;
+    }
+
+    /**
+     * @param mixed $tva
+     */
+    public function setTva($tva)
+    {
+        $this->tva = $tva;
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -18,15 +19,25 @@ class User extends BaseUser
      * @ORM\Column(type="integer")
      */
     protected $id;
+
+//    /**
+//     * @ORM\Column(type="string", length=50 ,nullable=true)
+//     */
     /**
-     * @ORM\Column(type="string", length=255 ,nullable=true)
+     * @ORM\OneToMany(targetEntity="Commandes", mappedBy="userOrm")
      */
-    protected $name;
+    private $commandes;
+    /**
+     * @ORM\OneToMany(targetEntity="UtilisateursAdresses", mappedBy="user", cascade={"remove"})
+     */
+    private $adresses;
+//relation
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->commandes = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId()
@@ -34,15 +45,38 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @return mixed
+     */
+    public function getCommandes()
     {
-        return $this->name;
+        return $this->commandes;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param mixed $commandes
+     */
+    public function setCommandes($commandes)
     {
-        $this->name = $name;
-
-        return $this;
+        $this->commandes = $commandes;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAdresses()
+    {
+        return $this->adresses;
+    }
+
+    /**
+     * @param mixed $adresses
+     */
+    public function setAdresses($adresses)
+    {
+        $this->adresses = $adresses;
+    }
+
+
+
 }

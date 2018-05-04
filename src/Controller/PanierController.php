@@ -9,6 +9,9 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
+use App\Entity\UserAdress;
+use App\Entity\UtilisateursAdresses;
+use App\Form\UtilisateurAdresseType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -80,7 +83,6 @@ class PanierController extends Controller
             ->getRepository(Menu::class)
             ->findArray(array_keys($session->get('panier')));
 
-//        if (!$menus) throw  $this->createNotFoundException('Le panier est vide.');
         return $this->render('panier.html.twig',array('menus'=>$menus ,
                                                             'panier' => $session->get('panier')));
     }
@@ -88,9 +90,30 @@ class PanierController extends Controller
      * @Route("/livraison",name="livraison")
      */
 
-    public function  livraison()
+    public function  livraison(Request $request)
     {
-        return $this->render('livraison.html.twig');
+        $user =$this->container->get('security.token_storage')->getToken()->getUser();
+        $entity= new UtilisateursAdresses();
+        $form= $this->createForm(UtilisateurAdresseType::class,$entity);
+
+        if ($request->getMethod() =='POST')
+        {
+            $form->handleRequest($request);//pour récuperer ce qu'il ya dans le formulaire
+
+            if($form ->isValid()){
+                $em=$this->getDoctrine()->getManager();
+                $entity->setUser($user);
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('livraison'));
+            }
+        }
+
+
+
+        return $this->render('livraison.html.twig',['user'=>$user,
+                                                'form'=>$form->createView()]);
     }
     /**
      * @Route("/validation",name="validation")
@@ -103,5 +126,20 @@ class PanierController extends Controller
 //    {
 //        $session->set('foo','bar');
 //    }
+    /**
+     * @Route("livraison/adresse/suppression/{id}",name="adresseSuppression")
+     */
+    public function adresseSuppression($id)
+    {
+        $em =$this->getDoctrine()->getManager();
+        $entity = $em->getRepository('App:UtilisateursAdresses')->find($id);
+        $user= $this->container->get('security.token_storage')->getToken()->getUser();
+        if (  $user !=$entity->getUser() || $user !=$entity )//verifier que c'est l'utilisateur en cour qui supprime l'adresse est non un autre
+        $em->remove($entity);//suppression d'objet en base de données
+        $em->flush();//envoi en base de données
+
+        return ($this->redirect($this->generateUrl('livraison')));
+    }
+
 
 }
