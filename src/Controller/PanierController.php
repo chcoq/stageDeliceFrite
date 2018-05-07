@@ -18,13 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PanierController extends Controller
 {
-    public function menu(Request $request){
+    public function menu(Request $request)
+    {
         $session = $request->getsession();
-        if(!$session -> has('panier'))
-            $menu= 0;
+        if (!$session->has('panier'))
+            $menu = 0;
         else
-            $menu= count($session->get('panier'));
-        return $this->render('NavBar/panierMenu.html.twig',array('menu'=>$menu ));
+            $menu = count($session->get('panier'));
+        return $this->render('NavBar/panierMenu.html.twig', array('menu' => $menu));
     }
 
     /**
@@ -56,52 +57,55 @@ class PanierController extends Controller
     /**
      * @Route("/supprimer/{id}",name="supprimer")
      */
-    public function supprimer(Request $request,$id)
+    public function supprimer(Request $request, $id)
     {
         $session = $request->getsession();
         $panier = $session->get('panier');
-        if(array_key_exists($id,$panier))
-        {
+        if (array_key_exists($id, $panier)) {
             unset($panier[$id]);
-            $session->set('panier',$panier);
-            $this->get('session')->getFlashBag()->add('success','Article supprimé avec succés');
+            $session->set('panier', $panier);
+            $this->get('session')->getFlashBag()->add('success', 'Article supprimé avec succés');
         }
         return $this->redirectToRoute('panier');
     }
+
     /**
      * @Route("/panier",name="panier")
      */
     public function panier(Request $request)
     {
         $session = $request->getsession();
-        if(!$session->has('panier')) $session->set('panier',array());
+
+        if (!$session->has('panier')) $session->set('panier', array());
 //version < SF 4
 //        $em =$this->getDoctrine()->getManager();
 //        $menus = $em->getRepository('App:Menu')->findArray(array_keys($session->get('panier')));
 ////version > SF 3
-        $menus =$this->getDoctrine()
+///
+
+        $menus = $this->getDoctrine()
             ->getRepository(Menu::class)
             ->findArray(array_keys($session->get('panier')));
 
-        return $this->render('panier.html.twig',array('menus'=>$menus ,
-                                                            'panier' => $session->get('panier')));
+        return $this->render('panier.html.twig', array('menus' => $menus,
+            'panier' => $session->get('panier')));
     }
+
     /**
      * @Route("/livraison",name="livraison")
      */
 
-    public function  livraison(Request $request)
+    public function livraison(Request $request)
     {
-        $user =$this->container->get('security.token_storage')->getToken()->getUser();
-        $entity= new UtilisateursAdresses();
-        $form= $this->createForm(UtilisateurAdresseType::class,$entity);
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        $entity = new UtilisateursAdresses();
+        $form = $this->createForm(UtilisateurAdresseType::class, $entity);
 
-        if ($request->getMethod() =='POST')
-        {
+        if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);//pour récuperer ce qu'il ya dans le formulaire
 
-            if($form ->isValid()){
-                $em=$this->getDoctrine()->getManager();
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
                 $entity->setUser($user);
                 $em->persist($entity);
                 $em->flush();
@@ -109,37 +113,66 @@ class PanierController extends Controller
                 return $this->redirect($this->generateUrl('livraison'));
             }
         }
-
-
-
-        return $this->render('livraison.html.twig',['user'=>$user,
-                                                'form'=>$form->createView()]);
+        return $this->render('livraison.html.twig', ['user' => $user,
+            'form' => $form->createView()]);
     }
-    /**
-     * @Route("/validation",name="validation")
-     */
-    public function validation()
-    {
-        return $this->render('panier.html.twig');
-    }
-//    public function index(SessionInterface $session)
-//    {
-//        $session->set('foo','bar');
-//    }
+
     /**
      * @Route("livraison/adresse/suppression/{id}",name="adresseSuppression")
      */
     public function adresseSuppression($id)
     {
-        $em =$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('App:UtilisateursAdresses')->find($id);
-        $user= $this->container->get('security.token_storage')->getToken()->getUser();
-        if (  $user !=$entity->getUser() || $user !=$entity )//verifier que c'est l'utilisateur en cour qui supprime l'adresse est non un autre
-        $em->remove($entity);//suppression d'objet en base de données
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
+        if ($user != $entity->getUser() || $user != $entity)//verifier que c'est l'utilisateur en cour qui supprime l'adresse est non un autre
+            $em->remove($entity);//suppression d'objet en base de données
         $em->flush();//envoi en base de données
 
         return ($this->redirect($this->generateUrl('livraison')));
     }
 
+    /**
+     * @Route("/validation",name="validation")
+     */
+    public function validation(Request $request)
+    {
+
+        if($this->get('request_stack')->getCurrentRequest());
+        $this->setLivraisonOnSession($request);
+        $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $adresse = $session->get('adresse');
+
+        $menus = $this->getDoctrine()
+            ->getRepository(Menu::class)
+            ->findArray(array_keys($session->get('panier')));
+        $livraison =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['livraison']);
+        $facturation =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['facturation']);
+
+
+        return $this->render('validation.html.twig',['menus'=>$menus,
+                                                           'livraison'=>$livraison,
+                                                           'facturation'=>$facturation,
+                                                           'panier'=>$session->get('panier')]);
+    }
+
+    public function setLivraisonOnSession(Request $request)
+    {
+        $session = $request->getSession();
+        if (!$session->has('adresse')) $session->set('adresse', array());//on verifie que la session adresse existe sinon on la créer
+        $adresse = $session->get('adresse');//si elle existe on l'affecte a getsession
+//dump($request->request->get('facturation'));
+////        die('ici2');
+        if ($request->request->get('livraison') != null && $request->request->get('facturation') != null) {//request permet de récuperer la varialble dans le formulaire
+            $adresse['livraison'] = $request->request->get('livraison');//si livraison et facturation ne sont pas nul on ajoute la valeur du formulaire
+            $adresse['facturation'] = $request->request->get('facturation');
+        } else {
+            return $this->redirect($this->generateUrl('validation')); //sinon on retourne a la page validation
+        }
+
+        $session->set('adresse',$adresse);
+        return $this->redirect($this->generateUrl('validation'));
+    }
 
 }

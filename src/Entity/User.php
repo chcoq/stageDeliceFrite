@@ -31,6 +31,7 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="UtilisateursAdresses", mappedBy="user", cascade={"remove"})
      */
     private $adresses;
+
 //relation
 
     public function __construct()
@@ -76,7 +77,6 @@ class User extends BaseUser
     {
         $this->adresses = $adresses;
     }
-
 
 
 }

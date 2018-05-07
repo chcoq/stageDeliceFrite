@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Menu{% endblock %}
+
+{% block title %}{{ title }}}{% endblock %}
+{% block description %}Les différents menus{% endblock %}
+
 {#{% block stylesheets %}#}
     {#<style >div{#}
         {#border: 1px solid black }#}
@@ -27,7 +30,7 @@
                             <h4><a href="/description/{{ menu.id }}">{{ menu.name|upper }}</a></h4>
                         </span>
                         <span class="right">
-                            {{ menu.price|number_format(2,',',' ') }}€
+                             {{ menu.price|tva(menu.tva.multiplicate)|number_format(2,',',' ') }} €
                             {% if panier[menu.id] is not defined %}
                                 <a class="btn-outline-secondary btn-sm " href="{{ path('ajouter',{'id':menu.id}) }}" style="width: 16ch">Ajouter au panier</a>
                             {% else %}

@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+    {% block title %}{{ title }} - Panier{% endblock %}
 {% block stylesheets %}
     {#<link rel="stylesheet" href="{{ asset('css/css/bootstrap.css') }}">#}
     <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
@@ -6,11 +7,14 @@
 {% endblock %}
 {%  set totalHT = 0 %}
 {%  set totalTTC = 0 %}
+{% set refTva= [] %}
+{% for menu in menus %}{# initialisaton des clés pour les TVA #}
+    {% set refTva = refTva|merge({ (menu.tva.valeur)~' %':0 }) %}{#merge -> permet d'inserer une Tva dés quelle est différente la valeur de la tva#}
+{% endfor %}
 
-{#{% set refTva= [] %}#}
-{#{% set refTva = refTva|merge{{ ('%'~produit.tva.valeur):0 }} %}#}
 
 {% block body %}
+    {{ dump(refTva) }}
 {% for flashMessage in app.session.flashbag.get('success') %}
     <div class="alert alert-success">
         {{ flashMessage }}
@@ -59,8 +63,8 @@
                             </form>
                         </tr>
                         {%  set totalHT = totalHT +(menu.price *panier[menu.id ])%}
-                            {% set totalTTC =totalTTC +(menu.price *panier[menu.id ]) %}
-
+                        {% set totalTTC =totalTTC +(menu.price *panier[menu.id ])|tva(menu.tva.multiplicate) %}
+                        {% set refTva = refTva|merge({ (menu.tva.valeur ~' %' ) : refTva[ menu.tva.valeur~' %'] + (menu.price * panier[menu.id])| montantTva(menu.tva.multiplicate)}) %}
                         {% endfor %}
                         </tbody>
                     </table>
@@ -69,11 +73,14 @@
                     <dl class="dl-horizontal pull-right">
                         <dt>Total HT :</dt>
                         <dd>{{ totalHT|number_format(2,',',' ') }}€</dd>
-
                         <dt>TVA :</dt>
-                        <dd>200€</dd>
-
-                        <dt>Total:</dt>
+                        {% for key, tva in refTva %}
+                        <dd style="text-align: right">
+                            {{ key }} :
+                                {{ tva |number_format(2,',',' ')}}€
+                        </dd>
+                        {%  endfor %}
+                        <dt>Total TTC:</dt>
                         <dd>{{ totalTTC|number_format(2,',',' ') }}€</dd>
                     </dl>
                     <div class="clearfix"></div>

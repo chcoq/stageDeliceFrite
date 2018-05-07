@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ title }} {{ description.category.namecat }} {{ description.name }}{% endblock %}
+{% block description %}{{ description.name }}{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/styleDescription.css') }}">
 {% endblock %}
 
-{% block title %}Description{% endblock %}
+
 {% block body %}
     <div class="container">
         <div class="row">
@@ -18,7 +20,8 @@
                     <div class="col"><h3>{{ description.name }}</h3><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-6"> {{ description.price|number_format(2,',',' ') }}€</div>
+                    <div class="col-6"> {{ description.price|tva(description.tva.multiplicate)|number_format(2,',',' ') }} €</div>
+                    {#<div class="col-6"> {{ description.price|number_format(2,',',' ') }}€</div>#}
                     <div class="col-6">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             Panier
