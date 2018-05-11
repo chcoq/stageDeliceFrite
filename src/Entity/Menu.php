@@ -134,24 +134,20 @@ class Menu
     }
 
 
-    public function __toString() {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getTva()
     {
         return $this->tva;
     }
 
-    /**
-     * @param mixed $tva
-     */
+
     public function setTva($tva)
     {
         $this->tva = $tva;
+    }
+
+
+    public function __toString() {
+        return $this->name;
     }
 
 }

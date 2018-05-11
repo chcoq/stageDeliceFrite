@@ -5,13 +5,18 @@
     <link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
 
 {% endblock %}
-{%  set totalHT = 0 %}
-{%  set totalTTC = 0 %}
-{% set refTva= [] %}
-{% for menu in menus %}{# initialisaton des clés pour les TVA #}
-    {% set refTva = refTva|merge({ (menu.tva.valeur)~' %':0 }) %}{#merge -> permet d'inserer une Tva dés quelle est différente la valeur de la tva#}
-{% endfor %}
+{#{%  set totalHT = 0 %}#}
+{#{%  set totalTTC = 0 %}#}
+{#{% set refTva= [] %}#}
+{#{% for menu in menus %}#}{# initialisaton des clés pour les TVA #}
+    {#{% set refTva = refTva|merge({ (menu.tva.valeur)~' %':0 }) %}#}{#merge -> permet d'inserer une Tva dés quelle est différente la valeur de la tva#}
+{#{% endfor %}#}
 {% block body %}
+    {#{% for menu in commande.commande.menu%}#}
+        {#<h1>{{ menu.quantite }}</h1>#}
+        {#}#}
+
+        {#{% endfor %}#}
     <h1>Valider mon parnier</h1>
     <div class="container">
         <div class="row">
@@ -31,18 +36,18 @@
                         </thead>
 
                         <tbody>
-                        {% for menu in menus %}
+                        {% for menu in commande.commande.menu %}
                             <tr>
-                                <td>{{ menu.name }}</td>
+                                <td>{{ menu.reference }}</td>
                                 <td>
-                                    {{ panier[menu.id] }}
+                                    {{ menu.quantite }}
                                 </td>
-                                <td>{{ menu.price|number_format(2,',',' ') }}€</td>
-                                <td>{{ (menu.price *panier[menu.id ])|number_format(2,',',' ')}}€</td>
+                                <td>{{ menu.prixHT|number_format(2,',',' ') }}€</td>
+                                <td>{{ (menu.prixHT * menu.quantite)|number_format(2,',',' ')}}€</td>
                             </tr>
-                            {%  set totalHT = totalHT +(menu.price *panier[menu.id ])%}
-                            {% set totalTTC =totalTTC +(menu.price *panier[menu.id ]) %}
-                            {% set refTva = refTva|merge({ (menu.tva.valeur ~' %' ) : refTva[ menu.tva.valeur~' %'] + (menu.price * panier[menu.id])| montantTva(menu.tva.multiplicate)}) %}
+                            {#{%  set totalHT = totalHT +(menu.price *panier[menu.id ])%}#}
+                            {#{% set totalTTC = totalTTC +(menu.price *panier[menu.id ]) %}#}
+                            {#{% set refTva = refTva|merge({ (menu.tva.valeur ~' %' ) : refTva[ menu.tva.valeur~' %'] + (menu.price * panier[menu.id])| montantTva(menu.tva.multiplicate)}) %}#}
 
                         {% endfor %}
                         </tbody>
@@ -51,35 +56,35 @@
 
                 <dl class="dl-horizontal pull-right">
                     <dt>Total HT :</dt>
-                    <dd>{{ totalHT|number_format(2,',',' ') }}€</dd>
+                    <dd>{{  commande.commande.prixHT|number_format(2,',',' ') }}€</dd>
                     <dt>TVA :</dt>
-                    {% for key, tva in refTva %}
+                    {% for key, tva in commande.commande.tva %}
                         <dd style="text-align: right">
                             {{ key }} :
                             {{ tva |number_format(2,',',' ')}}€
                         </dd>
                     {%  endfor %}
                     <dt>Total TTC:</dt>
-                    <dd>{{ totalTTC|number_format(2,',',' ') }}€</dd>
+                    <dd>{{ commande.commande.prixTTC|number_format(2,',',' ') }}€</dd>
                 </dl>
                 <div class="span3 pull-left">
                     <dl class="pull-left">
                         <dt><h6>Adresse de livraison</h6></dt>
-                        <dt>{{ livraison.nom|capitalize}} {{ livraison.prenom|capitalize }}</dt>
-                        <dt>{{ livraison.adresse }}</dt>
-                        <dt>{{ livraison.cp }} {{ livraison.ville }}</dt>
-                        <dt>{{ livraison.complement }}</dt>
-                        <dt>{{ livraison.pays }}</dt>
+                        <dt>{{ commande.commande.livraison.nom|capitalize}} {{ commande.commande.livraison.prenom|capitalize }}</dt>
+                        <dt>{{ commande.commande.livraison.adresse }}</dt>
+                        <dt>{{ commande.commande.livraison.cp }} {{ commande.commande.livraison.ville }}</dt>
+                        <dt>{{ commande.commande.livraison.complement }}</dt>
+                        <dt>{{ commande.commande.livraison.pays }}</dt>
                     </dl>
                 </div>
                 <div class="span3 pull-left">
                     <dl class="pull-left">
                         <dt><h6>Adresse de facturation</h6></dt>
-                        <dt>{{ facturation.nom|capitalize}} {{ facturation.prenom|capitalize }}</dt>
-                        <dt>{{ facturation.adresse }}</dt>
-                        <dt>{{ facturation.cp }} {{ facturation.ville }}</dt>
-                        <dt>{{ facturation.complement }}</dt>
-                        <dt>{{ facturation.pays }}</dt>
+                        <dt>{{ commande.commande.facturation.nom|capitalize}} {{ commande.commande.facturation.prenom|capitalize }}</dt>
+                        <dt>{{ commande.commande.facturation.adresse }}</dt>
+                        <dt>{{ commande.commande.facturation.cp }} {{ commande.commande.facturation.ville }}</dt>
+                        <dt>{{ commande.commande.facturation.complement }}</dt>
+                        <dt>{{ commande.commande.facturation.pays }}</dt>
                     </dl>
                 </div>
                 <div class="clearfix"></div>

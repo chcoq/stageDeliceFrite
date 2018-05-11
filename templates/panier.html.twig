@@ -11,11 +11,8 @@
 {% for menu in menus %}{# initialisaton des clés pour les TVA #}
     {% set refTva = refTva|merge({ (menu.tva.valeur)~' %':0 }) %}{#merge -> permet d'inserer une Tva dés quelle est différente la valeur de la tva#}
 {% endfor %}
-
-
 {% block body %}
-    {{ dump(refTva) }}
-{% for flashMessage in app.session.flashbag.get('success') %}
+ {% for flashMessage in app.session.flashbag.get('success') %}
     <div class="alert alert-success">
         {{ flashMessage }}
     </div>

@@ -137,24 +137,40 @@ class PanierController extends Controller
      */
     public function validation(Request $request)
     {
+        if($request->isMethod('POST'))
+//        if($this->get('request_stack')->getCurrentRequest())
+        {$this->setLivraisonOnSession($request);}
 
-        if($this->get('request_stack')->getCurrentRequest());
-        $this->setLivraisonOnSession($request);
-        $em = $this->getDoctrine()->getManager();
-        $session = $request->getSession();
-        $adresse = $session->get('adresse');
+        $em =  $this->getDoctrine()->getManager();
+      $prepareCommande = $this->forward('App\Controller\CommandeController::prepareCommande');//appel la méthode prepareCommande dans le controller  CommandeController
 
-        $menus = $this->getDoctrine()
-            ->getRepository(Menu::class)
-            ->findArray(array_keys($session->get('panier')));
-        $livraison =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['livraison']);
-        $facturation =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['facturation']);
+        $commande  =  $em->getRepository( 'App:Commandes' )->find( $prepareCommande->getContent());//récupere l'id générer par le new response ($commande->getId())
+        dump($commande);
+
+//       die('fin');
+        return  $this->render ( 'validation.html.twig' , ['commande'=>$commande]);
 
 
-        return $this->render('validation.html.twig',['menus'=>$menus,
-                                                           'livraison'=>$livraison,
-                                                           'facturation'=>$facturation,
-                                                           'panier'=>$session->get('panier')]);
+
+
+
+
+
+
+//        $session = $request->getSession();
+//        $adresse = $session->get('adresse');
+//
+//        $menus = $this->getDoctrine()
+//            ->getRepository(Menu::class)
+//            ->findArray(array_keys($session->get('panier')));
+//        $livraison =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['livraison']);
+//        $facturation =$em ->getRepository(UtilisateursAdresses::class)->find($adresse['facturation']);
+//       dump($commande);
+//die('fin');
+//        return $this->render('validation.html.twig',['commande'=>$commande,/*
+//                                                           'livraison'=>$livraison,
+//                                                           'facturation'=>$facturation,
+//                                                           'panier'=>$session->get('panier')*/]);
     }
 
     public function setLivraisonOnSession(Request $request)
@@ -162,8 +178,6 @@ class PanierController extends Controller
         $session = $request->getSession();
         if (!$session->has('adresse')) $session->set('adresse', array());//on verifie que la session adresse existe sinon on la créer
         $adresse = $session->get('adresse');//si elle existe on l'affecte a getsession
-//dump($request->request->get('facturation'));
-////        die('ici2');
         if ($request->request->get('livraison') != null && $request->request->get('facturation') != null) {//request permet de récuperer la varialble dans le formulaire
             $adresse['livraison'] = $request->request->get('livraison');//si livraison et facturation ne sont pas nul on ajoute la valeur du formulaire
             $adresse['facturation'] = $request->request->get('facturation');
