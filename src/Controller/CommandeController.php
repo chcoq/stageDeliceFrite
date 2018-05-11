@@ -14,6 +14,7 @@ use App\Entity\UtilisateursAdresses;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CommandeController extends Controller
 {
@@ -99,6 +100,35 @@ class CommandeController extends Controller
         $commande['token'] = bin2hex($generator);
 
         return $commande;
+    }
+
+
+     //simulation API banquaire
+    /**
+     * @Route("/api/banque/{id}",name="validationCommande")
+     */
+
+    public function validationCommande(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $commande = $em->getRepository('App:Commandes')->find($id);
+
+        if(!$commande || $commande->getValider()==1) //on vérifie que la commande existe et qu'elle n'a pas encore été valider
+            throw $this->createNotFoundException('La commande n\'existe pas');
+
+        $commande->setValider(1);//si pas encore valider on passe la valeur à 1
+//        dump($commande );
+//        die('debug');
+        $commande->setReference(1);//on renvoi vers le service reference
+        $em->flush();
+        $session = $request->getSession();
+        $session->remove('adresse');//on supprime tous dans la session sauf l'utilisateur
+        $session->remove('panier');
+        $session->remove('commande');
+
+        $this->get('session')->getFlashBag()->add('success','Votre commande est validée avec succés');
+        return $this->redirect($this->generateUrl('homePage'));
     }
 
 }
