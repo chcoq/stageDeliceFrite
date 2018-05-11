@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}{{ title }}}{% endblock %}
+{% block title %}{{ title }} - Menu
+    {% for menu in menus %}
+        {% set counter = ( counter | default(0) ) + 1 %}
+        {% if counter == 1 %}
+            {{ menu.category.namecat }}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
 {% block description %}Les différents menus{% endblock %}
 
 {#{% block stylesheets %}#}

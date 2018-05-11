@@ -101,7 +101,12 @@ class CommandeController extends Controller
 
         return $commande;
     }
-
+//    private $setNewReference;
+//
+//    public function __construct(GetReference $setNewReference)
+//    {
+//        $this->setNewReference = $setNewReference;
+//    }
 
      //simulation API banquaire
     /**
@@ -120,7 +125,7 @@ class CommandeController extends Controller
         $commande->setValider(1);//si pas encore valider on passe la valeur à 1
 //        dump($commande );
 //        die('debug');
-        $commande->setReference(1);//on renvoi vers le service reference
+        $commande->setReference($this->get('setNewReference')->reference());//on renvoi vers le service qui va referencer
         $em->flush();
         $session = $request->getSession();
         $session->remove('adresse');//on supprime tous dans la session sauf l'utilisateur
@@ -128,7 +133,7 @@ class CommandeController extends Controller
         $session->remove('commande');
 
         $this->get('session')->getFlashBag()->add('success','Votre commande est validée avec succés');
-        return $this->redirect($this->generateUrl('homePage'));
+        return $this->redirect($this->generateUrl('facture'));
     }
 
 }

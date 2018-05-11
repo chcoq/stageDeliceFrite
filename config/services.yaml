@@ -39,3 +39,7 @@ services:
     App\Twig\Extension\MontantTvaExtension:
             tags:
                 - {name: twig.extension }
+    setNewReference:
+        class: App\Services\GetReference
+        arguments: ['@security.authorization_checker','@doctrine.orm.entity_manager']
+        public: true

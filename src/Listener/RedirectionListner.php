@@ -24,7 +24,7 @@ class RedirectionListner
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $route = $event->getRequest()->attributes->get('_route');//$route recuper le lon de la route
+        $route = $event->getRequest()->attributes->get('_route');// recuper le nom de la route
         if ($route == 'livraison' || $route == 'validation') {//si la route est égale à livraison ou validation
             if ($this->session->has('panier')) { //on vérifie si on est connecter
                 if (count($this->session->get('panier')) == 0) { //on vérifie si le n'est pas vide
