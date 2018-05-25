@@ -1,0 +1,15 @@
+{% extends'navAdmin.html.twig' %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
+{% endblock %}
+{% block title %}New Category{% endblock %}
+
+{% block cat %}
+    <h1>Create new Category</h1>
+
+    {{ include('category/_form.html.twig') }}
+
+    <a style="color: #343a40;" href="{{ path('category_index') }}">back to list</a>
+{% endblock %}

@@ -7,7 +7,7 @@ twig:
         copyright: Lecocq David
         title: Delice Frites
         adresse: 10 Rue des Poilus, Courcelles-lès-Lens, France
-        phone: 0678
+        phoneDF: '06 78 64 75 24'
 
 services:
     # default configuration for services in *this* file

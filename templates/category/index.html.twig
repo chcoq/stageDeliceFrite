@@ -1,0 +1,41 @@
+{% extends'navAdmin.html.twig' %}
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
+<link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+{% block title %}Category index{% endblock %}
+
+{% block cat %}
+
+    <h1>Category index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NameCat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.nameCat }}</td>
+                <td>
+                    <a style="color: #343a40;" href="{{ path('category_show', {'id': category.id}) }}"><i class="icon-eye-open"></i> show</a>
+                    <a style="color: #343a40 ;margin-left: 2%" href="{{ path('category_edit', {'id': category.id}) }}"><i class="icon-pencil"></i> Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a style="color: #343a40;" href="{{ path('category_new') }}">Create new</a>
+{% endblock %}

@@ -31,7 +31,7 @@
             </li>
 {#lien pour aller sur la page admin          #}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <li class="nav-item"><a class="nav-link" href="{{ path('admin') }}">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('navAdmin') }}">Admin</a></li>
             {% endif %}
 {#rendu du menu déroulants des menus#}
             {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}

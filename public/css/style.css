@@ -9,9 +9,12 @@ body {
     font-size: 14px;
 
 }
-a{
-    text-decoration:none!important;
-}
+/*a{*/
+    /*text-decoration:none!important;*/
+    /*color: #343a40 !important;*/
+    /*font-weight: bold;*/
+/*}*/
+
 .ico {
     width: 30px;
 }

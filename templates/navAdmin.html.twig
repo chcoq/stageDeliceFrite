@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Administrateur{% endblock %}
+   {#{% block stylesheets %}#}
+       {#<link rel="stylesheet" href="{{ asset('css/css/bootstrap.css') }}">#}
+       {#<link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">#}
+       {#<link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">#}
+   {#{% endblock %}#}
+{% block body %}
+
+    <h1>Administration</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <li class="nav-item">
+                    <a style="color: #343a40;font-weight: bold;" class="nav-link" href="{{  path('category_index') }}">Catégorie</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #343a40;font-weight: bold;" class="nav-link" href="{{  path('horaire_index') }}">Horaire</a>
+                </li>
+            </div>
+            <div class="col-6">
+                {% block cat %}{% endblock %}
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+{% endblock %}

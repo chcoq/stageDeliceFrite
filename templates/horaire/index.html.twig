@@ -1,0 +1,46 @@
+{% extends'navAdmin.html.twig' %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+{% block title %}Horaire index{% endblock %}
+
+{% block cat %}
+    <h1>Horaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Jour</th>
+                <th>Ouverture Midi</th>
+                <th>Fermeture Midi</th>
+                <th>Ouverture Soir</th>
+                <th>Fermeture Soir</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for horaire in horaires %}
+            <tr>
+                <td>{{ horaire.jour }}</td>
+                <td>{{ horaire.midiDebut ? horaire.midiDebut|date('H:i') : '' }}</td>
+                <td>{{ horaire.midifin ? horaire.midifin|date('H:i') : '' }}</td>
+                <td>{{ horaire.soirdebut ? horaire.soirdebut|date('H:i') : '' }}</td>
+                <td>{{ horaire.soirfin ? horaire.soirfin|date('H:i') : '' }}</td>
+                <td>
+                    <a style="color: #343a40;"href="{{ path('horaire_show', {'id': horaire.id}) }}"><i class="icon-eye-open"></i> show</a>
+                    <a style="color: #343a40;" href="{{ path('horaire_edit', {'id': horaire.id}) }}"><i class="icon-pencil"></i> Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a style="color: #343a40;"href="{{ path('horaire_new') }}">Create new</a>
+{% endblock %}

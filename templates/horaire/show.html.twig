@@ -1,0 +1,43 @@
+{% extends'navAdmin.html.twig' %}
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+{% block title %}Horaire{% endblock %}
+
+{% block cat %}
+    <h1>Horaire</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Jour</th>
+            <td>{{ horaire.jour }}</td>
+        </tr>
+        <tr>
+            <th>MidiDebut</th>
+            <td>{{ horaire.midiDebut ? horaire.midiDebut|date('H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Midifin</th>
+            <td>{{ horaire.midifin ? horaire.midifin|date('H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Soirdebut</th>
+            <td>{{ horaire.soirdebut ? horaire.soirdebut|date('H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Soirfin</th>
+            <td>{{ horaire.soirfin ? horaire.soirfin|date('H:i:s') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a style="color: #343a40;" href="{{ path('horaire_index') }}">back to list</a>
+
+    <a style="color: #343a40;" href="{{ path('horaire_edit', {'id': horaire.id}) }}">edit</a>
+
+    {{ include('horaire/_delete_form.html.twig') }}
+{% endblock %}

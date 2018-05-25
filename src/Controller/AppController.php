@@ -18,7 +18,13 @@ class AppController extends  Controller
         return $this-> render('/Accueil.html.twig');
     }
 
-
+    /**
+     * @Route("/admin/profile", name="navAdmin")
+     */
+    public function navAdmin(Request $request)
+    {
+        return $this-> render('navAdmin.html.twig');
+    }
 
 }
 
