@@ -12,7 +12,6 @@ namespace App\Services;
 class GetReference
 {
 
-
     public function __construct($securityContext, $entityManager)
     {
         $this->securityContext = $securityContext;

@@ -29,7 +29,7 @@ class RedirectionListner
             if ($this->session->has('panier')) { //on vérifie si on est connecter
                 if (count($this->session->get('panier')) == 0) { //on vérifie si le n'est pas vide
                     $this->session->getFlashBag()->add('notification', 'Vous n\'avez pas d\'article dans le panier');
-                    $event->setResponse(new RedirectResponse($this->router->generate('panier')));//si le panier est vide on rediroge vers le panier
+                    $event->setResponse(new RedirectResponse($this->router->generate('panier')));//si le panier est vide on redirige vers le panier
                 }
             }
             if (!is_object($this->securityContext->getToken()->getUser())) {// si on est pas connecter on renvoie vers la page de connexion

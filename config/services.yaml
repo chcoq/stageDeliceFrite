@@ -6,6 +6,8 @@ twig:
     globals:
         copyright: Lecocq David
         title: Delice Frites
+        adresse: 10 Rue des Poilus, Courcelles-lès-Lens, France
+        phone: 0678
 
 services:
     # default configuration for services in *this* file
@@ -43,3 +45,5 @@ services:
         class: App\Services\GetReference
         arguments: ['@security.authorization_checker','@doctrine.orm.entity_manager']
         public: true
+    app.html2pdf:
+        class: App\Services\Html2pdf

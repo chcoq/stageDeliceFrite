@@ -59,7 +59,6 @@ class Menu
     }
     //fin de la jointure
 
-    //ajout de la jointure  entre la table menu et la table produid
 
     public function getCategory()
     {
@@ -87,7 +86,6 @@ class Menu
         $this->products = $products;
     }
 
-    //fin de la jointure
 
     public function getId()
     {

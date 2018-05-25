@@ -18,12 +18,8 @@ class CommandesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commandes::class);
     }
-
-
     public function byFacture($utilisateur)
-
     {
-//        $utilisateur="David";
         $qb = $this->createQueryBuilder('c')
             ->select('c')
             ->where('c.user = :utilisateur')
@@ -35,22 +31,4 @@ class CommandesRepository extends ServiceEntityRepository
 
         return $qb->execute();
     }
-
-
-//    /**
-//     * @return Commande[] Returns an array of Commande objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 }

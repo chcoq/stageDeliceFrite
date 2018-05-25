@@ -8,20 +8,18 @@
 {% endblock %}
 {% block title %}{{ title }} - Factures{% endblock %}
 
-
 {% block body %}
     <br>
     <div class="container">
         <div class="row">
             <div class="col-2"></div>
-
             <div class="col-8">
-                {%  for flashMessage in app.session.flashbag.get('success') %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
                     <div class="alert alert-success">
                         {{ flashMessage }}
                     </div>
                 {% endfor %}
-                {%  for flashMessage in app.session.flashbag.get('error') %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
                     <div class="alert alert-error">
                         {{ flashMessage }}
                     </div>
@@ -42,23 +40,21 @@
                             <tr>
                                 <td colspan="4" style="text-align: center">Aucunne facture actuellement</td>
                             </tr>
-                            {% endif %}
-{% for facture in factures %}
-                        <tr>
-                            <td><a href="#">n°: {{ facture.reference }}</a></td>
-                            <td>{{ facture.date|date('d/m/Y') }}</td>
-                            <td>{{  facture.commande.prixTTC}} €</td>
-                            <td><a href="#"><i class="icon-refresh"></i></a></td>
-                        </tr>
-    {% endfor %}
-
+                        {% endif %}
+                        {% for facture in factures %}
+                            <tr>
+                                <td><a href="#">n°: {{ facture.reference }}</a></td>
+                                <td>{{ facture.date|date('d/m/Y') }}</td>
+                                <td>{{ facture.commande.prixTTC }} €</td>
+                                <td><a href="{{ path('facturePDF',{'id':facture.id}) }}" target="_blank"><i
+                                                class="icon-refresh"></i></a></td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </form>
-
             </div>
             <div class="col-2"></div>
-
         </div>
     </div>
 {% endblock %}

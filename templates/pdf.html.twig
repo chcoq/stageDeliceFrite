@@ -1,0 +1,158 @@
+<style type="text/css">
+h1 {
+     position:absolute;
+     color: #54cc8b;
+     font-size:50px;
+ }
+
+
+.center {
+text-align:center;
+}
+
+.color {
+color: #5c5c5c;
+}
+
+.strong {
+font-weight:bold;
+}
+.min {
+font-size:10px;
+}
+
+img {
+position:absolute;
+top:80px;
+left:30px;
+}
+
+ul#coordonnes {
+float:left;
+margin-top:30px;
+margin-left:400px;
+list-style:none;
+}
+
+ul#coordonnes li {
+height:20px;
+}
+
+table#enTete {
+position:absolute;
+top:5px;
+right:330px;
+text-align:center;
+}
+
+table#enTete h1 {
+color: #d6c42d;
+font-weight:bold;
+font-size:20px;
+}
+
+table#entity {
+float:left;
+margin-top:30px;
+text-align:center;
+}
+
+table#entity td {
+height:45px;
+border-bottom:1px solid #181818;
+}
+
+table#total {
+float:right;
+margin-left:495px;
+border-bottom:1px solid #5c5c5c;
+border-right:1px solid #5c5c5c;
+border-left:1px solid #5c5c5c;
+}
+
+table#total td {
+height:20px;
+}
+
+#footer {
+position:absolute;
+bottom:0px;width:100%;
+text-align:center;
+line-height:25px;
+}
+</style>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Facture</title>
+
+</head>
+<body>
+<h1>Delice Frites</h1>
+<table id="enTete">
+    <tr>
+        <td colspan="1"></td>
+        <td colspan="1"><h1>Facture</h1></td>
+        <td colspan="1"></td>
+    </tr>
+    <tr>
+        <td width="80">Page</td>
+        <td width="100">Date</td>
+        <td width="120">Ref</td>
+    </tr>
+    <tr>
+        <td class="color">[[page_nb]]</td>
+        <td class="color">{{ facture.date|date('d-m-Y') }}</td>
+        <td class="color">{{ facture.reference }}</td>
+    </tr>
+</table>
+<ul id="coordonnes" style="list-style: none">
+    <li>{{ facture.commande.facturation.nom|capitalize }} {{ facture.commande.facturation.prenom |capitalize }}</li>
+    <li>{{ facture.commande.facturation.adresse }}</li>
+    <li>{{ facture.commande.facturation.cp }} {{ facture.commande.facturation.ville }}
+        - {{ facture.commande.facturation.pays }}</li>
+</ul>
+<table id="entity">
+    <tr>
+        <td width="280">DESIGNATION</td>
+        <td width="105">QUANTITE</td>
+        <td width="100">P.U - HT</td>
+        <td width="105">MONTANT HT</td>
+        <td width="105">MONTANT TTC</td>
+    </tr>
+    {% for menu in facture.commande.menu %}
+        <tr>
+            <td class="color">{{ menu.reference }}</td>
+            <td class="color">{{ menu.quantite }}</td>
+            <td class="color">{{ menu.prixHT |number_format(2,',',' ') }} €</td>
+            <td class="color">{{ (menu.prixHT * menu.quantite)|number_format(2,',',' ') }} €</td>
+            <td class="color">{{ ( menu.prixTTC * menu.quantite )|number_format(2,',',' ') }} €</td>
+        </tr>
+    {% endfor %}
+</table>
+<table id="total">
+    <tr>
+        <td width="110">TOTAL HT :</td>
+        <td width="100" class="color">{{ facture.commande.prixHT }} €</td>
+    </tr>
+    {% for key, tva in facture.commande.tva %}
+        <tr>
+            <td width="110">TVA <span class="color min">{{ key }}</span> :</td>
+            <td width="100" class="color">{{ tva|number_format(2,',',' ') }} €</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td width="110">TOTAL TTC :</td>
+        <td width="100" class="color">{{ facture.commande.prixTTC|number_format(2,',',' ') }} €</td>
+    </tr>
+</table>
+<div id="footer">
+    <span class="color strong">{{ adresse }}</span>
+    <br/>
+    {{ phone }}
+</div>
+</body>
+</html>

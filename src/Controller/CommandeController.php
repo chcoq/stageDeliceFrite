@@ -55,7 +55,7 @@ class CommandeController extends Controller
         $panier = $session->get('panier');
         $commande = array();
         $totalHT = 0;
-        $totalTTC = 0;
+        $totalTVA = 0;
 
         $facturation = $em->getRepository(UtilisateursAdresses::class)->find($adresse['facturation']);//recupere les données de facturation dans adresse grace à la session
         $livraison = $em->getRepository(UtilisateursAdresses::class)->find($adresse['livraison']);
@@ -63,15 +63,18 @@ class CommandeController extends Controller
 
         foreach ($menus as $menu) {
             $prixHT = round($menu->getPrice() * $panier[$menu->getId()],2);
-            $prixTTC = round($menu->getPrice() * $panier[$menu->getId()] * $menu->getTva()->getMultiplicate(),2);
+            $prixTTC = $menu->getPrice() * $panier[$menu->getId()] * $menu->getTva()->getMultiplicate();
             $totalHT += $prixHT;
-            $totalTTC += $prixTTC;
 //création d'une cellule (tableau tva)
             if (!isset($commande['tva'][$menu->getTva()->getValeur() . ' %']))
                 $commande['tva'][$menu->getTva()->getValeur() . ' %'] = round($prixTTC - $prixHT, 2);//stock le montant de la tva
-            else
+
+        else
                 $commande['tva'][$menu->getTva()->getValeur() . ' %'] += round($prixTTC - $prixHT, 2);// si un montant a déja une tva on additionne le montant
-//création d'une cellule menu
+
+            $totalTVA += round($prixTTC-$prixHT,2);
+
+        //création d'une cellule menu
             $commande['menu'][$menu->getId()] = array('reference' => $menu->getName(),
                 'quantite' => $panier[$menu->getId()],
                 'prixHT' => round($menu->getPrice(), 2),
@@ -96,19 +99,12 @@ class CommandeController extends Controller
             'complement' => $facturation->getComplement());
 
         $commande['prixHT'] = round($totalHT, 2);
-        $commande['prixTTC'] = round($totalTTC, 2);
+        $commande['prixTTC'] = round($totalTVA +$totalHT, 2);
         $commande['token'] = bin2hex($generator);
 
         return $commande;
     }
-//    private $setNewReference;
-//
-//    public function __construct(GetReference $setNewReference)
-//    {
-//        $this->setNewReference = $setNewReference;
-//    }
 
-     //simulation API banquaire
     /**
      * @Route("/api/banque/{id}",name="validationCommande")
      */

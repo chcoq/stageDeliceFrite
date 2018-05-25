@@ -145,9 +145,9 @@ class PanierController extends Controller
       $prepareCommande = $this->forward('App\Controller\CommandeController::prepareCommande');//appel la méthode prepareCommande dans le controller  CommandeController
 
         $commande  =  $em->getRepository( 'App:Commandes' )->find( $prepareCommande->getContent());//récupere l'id générer par le new response ($commande->getId())
-//        dump($commande);
-//
-//      die('fin');
+//      dump($commande);
+////
+//     die('fin');
         return  $this->render ( 'validation.html.twig' , ['commande'=>$commande]);
 
 
