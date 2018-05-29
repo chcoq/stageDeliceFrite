@@ -29,14 +29,14 @@ class MenuController extends Controller
             $panier = $session ->get('panier');
         else
             $panier=false;
-       if (!$description) throw  $this->createNotFoundException('La page n\'existe pas.');
+        if (!$description) throw  $this->createNotFoundException('La page n\'existe pas.');
 
         return $this-> render('description.html.twig',['description' => $description,
-                                                   'panier'=>$panier]);
+                                                             'panier'=>$panier]);
     }
 
 }
 
-    /*
-     * SELECT name_cat, name, price FROM menu INNER JOIN category on category.id = menu.category_id WHERE name_cat='seul'
-     */
+/*
+ * SELECT name_cat, name, price FROM menu INNER JOIN category on category.id = menu.category_id WHERE name_cat='seul'
+ */

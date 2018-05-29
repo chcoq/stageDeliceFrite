@@ -1,4 +1,4 @@
-{% extends'navAdmin.html.twig' %}
+{% extends'admin/navAdmin.html.twig' %}
 {% block stylesheets %}
 
     <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
@@ -10,7 +10,7 @@
 {% block cat %}
     <h1>Create new Horaire</h1>
 
-    {{ include('horaire/_form.html.twig') }}
+    {{ include('admin/horaire/_form.html.twig') }}
 
     <a style="color: #343a40;"href="{{ path('horaire_index') }}">back to list</a>
 {% endblock %}

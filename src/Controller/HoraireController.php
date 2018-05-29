@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/horaire")
+ * @Route("admin/horaire")
  */
 class HoraireController extends Controller
 {
@@ -20,7 +20,7 @@ class HoraireController extends Controller
      */
     public function index(HoraireRepository $horaireRepository): Response
     {
-        return $this->render('horaire/index.html.twig', ['horaires' => $horaireRepository->findAll()]);
+        return $this->render('admin/horaire/index.html.twig', ['horaires' => $horaireRepository->findAll()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class HoraireController extends Controller
             return $this->redirectToRoute('horaire_index');
         }
 
-        return $this->render('horaire/new.html.twig', [
+        return $this->render('admin/horaire/new.html.twig', [
             'horaire' => $horaire,
             'form' => $form->createView(),
         ]);
@@ -51,7 +51,7 @@ class HoraireController extends Controller
      */
     public function show(Horaire $horaire): Response
     {
-        return $this->render('horaire/show.html.twig', ['horaire' => $horaire]);
+        return $this->render('admin/horaire/show.html.twig', ['horaire' => $horaire]);
     }
 
     /**
@@ -68,7 +68,7 @@ class HoraireController extends Controller
             return $this->redirectToRoute('horaire_edit', ['id' => $horaire->getId()]);
         }
 
-        return $this->render('horaire/edit.html.twig', [
+        return $this->render('admin/horaire/edit.html.twig', [
             'horaire' => $horaire,
             'form' => $form->createView(),
         ]);

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/category")
+ * @Route("admin/category")
  */
 class CategoryController extends Controller
 {
@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index(CategoryRepository $categoryRepository): Response
     {
-        return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
+        return $this->render('admin/category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_index');
         }
 
-        return $this->render('category/new.html.twig', [
+        return $this->render('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);
@@ -51,7 +51,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category): Response
     {
-        return $this->render('category/show.html.twig', ['category' => $category]);
+        return $this->render('admin/category/show.html.twig', ['category' => $category]);
     }
 
     /**
@@ -68,7 +68,7 @@ class CategoryController extends Controller
             return $this->redirectToRoute('category_edit', ['id' => $category->getId()]);
         }
 
-        return $this->render('category/edit.html.twig', [
+        return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
         ]);

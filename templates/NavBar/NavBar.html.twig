@@ -30,13 +30,15 @@
                 <a class="nav-link" href="{#{{ path('info') }}#}">Info Pratique</a>
             </li>
 {#lien pour aller sur la page admin          #}
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if is_granted("ROLE_ADMIN") %}
                 <li class="nav-item"><a class="nav-link" href="{{ path('navAdmin') }}">Admin</a></li>
             {% endif %}
 {#rendu du menu déroulants des menus#}
             {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
 {#Menu Panier#}
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             {{ render(controller('App\\Controller\\PanierController::menu')) }}
+            {% endif %}
 {#barre de recherche en cour de développement #}
             {#{{ render(controller('App\\Controller\\MenuController::recherche')) }}#}
 {#menu pour l'administrateur en cour de développement#}

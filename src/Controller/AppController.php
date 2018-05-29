@@ -23,7 +23,7 @@ class AppController extends  Controller
      */
     public function navAdmin(Request $request)
     {
-        return $this-> render('navAdmin.html.twig');
+        return $this-> render('admin/navAdmin.html.twig');
     }
 
 }

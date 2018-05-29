@@ -1,4 +1,4 @@
-{% extends'navAdmin.html.twig' %}
+{% extends'admin/navAdmin.html.twig' %}
 {% block stylesheets %}
 
     <link rel="stylesheet" href="{{ asset('css/css/bootstrap-responsive.css') }}">
@@ -39,5 +39,5 @@
 
     <a style="color: #343a40;" href="{{ path('horaire_edit', {'id': horaire.id}) }}">edit</a>
 
-    {{ include('horaire/_delete_form.html.twig') }}
+    {{ include('admin/horaire/_delete_form.html.twig') }}
 {% endblock %}
