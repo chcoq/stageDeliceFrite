@@ -17,11 +17,24 @@ class AuthController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $config = $em->getRepository('App:Config')->find(1);
-//        dump($config);
-//        die();
 
         return $this-> render('NavBar/Auth.html.twig',['config'=>$config]);
     }
 
+    public function PortableAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $config = $em->getRepository('App:Config')->find(1);
+
+        return $this-> render('Telephone/Portable.html.twig',['config'=>$config]);
+    }
+
+    public function FixeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $config = $em->getRepository('App:Config')->find(1);
+
+        return $this-> render('Telephone/Fixe.html.twig',['config'=>$config]);
+    }
 
 }

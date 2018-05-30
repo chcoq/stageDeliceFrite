@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Photo{% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+            .carousel-inner > .item > img,
+            .carousel-inner > .item > a > img {
+                width: 50%;
+                margin: auto;
+            }
+
+            .photo {
+                width: 50% !important;
+                height: 350px !important;
+            }
+        </style>
+    {% endblock %}
+{% block body %}
+{% set counter = 1 %}
+
+
+    <div class="container">
+        <br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                {% for photo in photos %}
+                    <li data-target="#myCarousel" data-slide-to={{ counter }}></li>
+                    {% set counter =  counter  + 1 %}
+                {% endfor %}
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+
+                <div class="item active">
+                    <img class="photo" src="{{ asset('images/Delicefrite/null.jpg') }}">
+                    <div class="carousel-caption">
+
+                        <p></p>
+                    </div>
+                    <br>
+                    <h3 style="text-align:center ">...</h3>
+                </div>
+
+                {% for photo in photos %}
+                    <div class="item ">
+                        <img class="photo" src="{{ asset('images/') }}{{ photo.path }} " alt="{{ photo.alt }}">
+                        <div class="carousel-caption">
+                            {#<p>The atmosphere in Chania has a touch of Florence and Venice.</p>#}
+                        </div>
+                        <br>
+                        <h3 style="text-align:center ">{{ photo.description|capitalize }}</h3>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+{% endblock %}

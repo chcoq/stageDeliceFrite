@@ -152,7 +152,13 @@ line-height:25px;
 <div id="footer">
     <span class="color strong">{{ adresse }}</span>
     <br/>
-    {{ phoneDF }}
+    {#Rendu du numéro de Portable#}
+    {{ render(controller('App\\Controller\\AuthController::PortableAction')) }}
+<br>
+    {#Rendu du numéro de Fixe#}
+    {{ render(controller('App\\Controller\\AuthController::FixeAction')) }}
+    <br>
+<br>
 </div>
 </body>
 </html>

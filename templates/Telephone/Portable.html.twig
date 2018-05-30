@@ -1,26 +1,5 @@
-{% if  config.public == true %}
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px; float:">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
-                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
-            </li>
-            <li class="nav-item" style="float: right">
-                <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
-            </li>
-        </ul>
-    {% else %}
-        <li class="nav-item">
-            <a href="{{ path('fos_user_security_login') }}"><span
-                        class="navbar-text">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
-            <span class="navbar-text"> / </span>
-            <a href="{{ path('fos_user_registration_register') }}"><span
-                        class="navbar-text">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
-        </li>
-    {% endif %}
+{% if  config.activateCellular == true %}
+    Portable : {{ config.cellular }}
 {% endif %}
 
-       {#<h3>essai</h3>#}
 

@@ -22,6 +22,10 @@ class Image
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $path;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -58,6 +62,22 @@ class Image
     }
     public function __toString() {
         return $this->path;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
 }
