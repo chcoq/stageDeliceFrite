@@ -1,8 +1,19 @@
 easy_admin:
+    entities:
+        # List the entity class name you want to manage
+#        - App\Entity\Product
+#        - App\Entity\Menu
+#        - App\Entity\Category
+#        - App\Entity\Horaire
+#        - App\Entity\Tva
+#        - App\Entity\Image
+#        - App\Entity\Config
+
+
+
     list:
         max_results: 10
         actions:
-#            - { name: 'show', icon: 'search' ,label: 'Montrer'}
             - { name: 'edit', icon: 'pencil' ,label: 'Edition' }
             - { name: 'delete', icon: 'remove' ,label: 'Suppression'}
     formats:
@@ -16,8 +27,9 @@ easy_admin:
             form:
                 title: 'Ajouter un nouveau produit'
                 fields:
-                    - { property: 'title',label: 'Nom du produit',css_class: 'text-center',type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Product' }}
-                    - {property: 'image', value: 'Delicefrite/null.jpg' }
+
+                    - { property: 'title',label: 'Nom du produit',css_class: 'text-center',type_options: { required: true }} #a ajouter si on veut faire une recherche par champs -> type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Product' }
+                    - {property: 'image', default: 'Delicefrite/null.jpg',help: "Mettre Delicefrite/null.jpg par défaut si il n'y a pas d'image " ,type_options: { required: true }}
 
             list:
                 title: "Produits"
@@ -39,8 +51,8 @@ easy_admin:
                 help: 'Attention les champs TVA , Produits et Catégorie doivent être renseigner avant de créer un nouveau menu'
                 title: 'Ajouter un nouveau menu'
                 fields:
-                    - { property: 'name',label: 'Nom du menu',css_class: 'text-center'}
-                    - { property: 'price',label: 'Prix',css_class: 'text-center', help: 'Le prix doit être HT'}
+                    - { property: 'name',label: 'Nom du menu',css_class: 'text-center',type_options: { required: true }}
+                    - { property: 'price',label: 'Prix',css_class: 'text-center', help: 'Le prix doit être HT',type_options: { required: true }}
                     - { type: 'divider' }
                     - { property: 'tva',label: 'Tva',css_class: 'text-center', actions: ['new']}
                     - { property: 'category',label: 'Catégorie',css_class: 'text-center'}
@@ -71,7 +83,7 @@ easy_admin:
             form:
                 title: 'Ajouter une nouvelle catégorie'
                 fields:
-                    - { property: 'nameCat',label: 'Nom du la catégorie',css_class: 'text-center'}
+                    - { property: 'nameCat',label: 'Nom du la catégorie',css_class: 'text-center',type_options: { required: true }}
             list:
                 title: "Catégorie"
                 max_results: 10
@@ -119,11 +131,13 @@ easy_admin:
             class: App\Entity\Tva
             label: 'Les Tva'
             form:
+                help: 'Exemple de Tva à 20%'
                 title: 'Ajouter une nouvelle TVA'
                 fields:
-                    - { property: 'multiplicate',label: 'Coéfficiant',css_class: 'text-center'}
-                    - { property: 'nom',label: 'nom',css_class: 'text-center'}
-                    - { property: 'valeur',label: 'valeur',css_class: 'text-center'}
+
+                    - { property: 'multiplicate',label: 'Coéfficiant',css_class: 'text-center',type_options: { required: true },help: 'ex: 1.20 '}
+                    - { property: 'nom',label: 'nom',css_class: 'text-center',type_options: { required: true },help: 'ex: TVA 20% '}
+                    - { property: 'valeur',label: 'valeur',css_class: 'text-center',type_options: { required: true },help: 'ex: 20'}
 
             list:
                 title: "Tva"
@@ -144,10 +158,10 @@ easy_admin:
             label: 'Les Images'
             image_base_path: '/images/'
             form:
-                title: 'Ajouter une nouvelle TVA'
+                title: 'Ajouter une nouvelle image'
                 fields:
-                    - { property: 'path',label: "Chemin de l'image",css_class: 'text-center' }
-                    - { property: 'alt',label: "Description de l'image",css_class: 'text-center'}
+                    - { property: 'path',label: "Chemin de l'image",css_class: 'text-center',type_options: { required: true } }
+                    - { property: 'alt',label: "Description de l'image",css_class: 'text-center',type_options: { required: true }}
             list:
                 title: "Images"
                 max_results: 10
@@ -159,7 +173,23 @@ easy_admin:
                 fields:
                     - { property: 'path',label: "Chemin de l'image",css_class: 'text-center'}
                     - { property: 'alt',label: "Description de l'image",css_class: 'text-center'}
+        Config:
+            class: App\Entity\Config
+            label: 'Configuration'
+            disabled_actions: ['new','delete','search']
+            list:
+                title: "Configuration"
+                fields:
 
+                    - { property: 'public',label: 'Activation des clients',css_class: 'text-center'}
+                    - { property: 'activateCellular',label: 'Activation du numéro de portable',css_class: 'text-center'}
+                    - { property: 'cellular',label: 'N° portable',css_class: 'text-center'}
+                    - { property: 'activateFixe',label: 'Activation du numéro de fixe',css_class: 'text-center'}
+                    - { property: 'fixe',label: 'N° fixe',css_class: 'text-center'}
+            edit:
+                fields:
+                    - { property: 'cellular',label: 'N° portable',css_class: 'text-center'}
+                    - { property: 'fixe',label: 'N° fixe',css_class: 'text-center'}
     site_name: 'Delice Frites'
     design:
         brand_color: '#343a40'
@@ -180,14 +210,11 @@ easy_admin:
                 - Horaire
                 - Image
                 - Tva
-            - {label: 'Sortir', route: 'homePage' ,  icon: 'off'}
+            - {label: 'Configuration', entity: 'Config',icon: 'cog'}
+
+            - {label: 'Sortir', route: 'homePage' ,  icon: 'home'}
 
 
 
 
 
-#        - App\Entity\Menu
-#        - App\Entity\Category
-#        - App\Entity\Horaire
-#        - App\Entity\Tva
-#        - App\Entity\Image

@@ -31,7 +31,7 @@ class Product
      * @ORM\ManyToMany(targetEntity="Menu" , mappedBy="products")
      */
 
-    private  $menus;
+    private $menus;
     /**
      * One Product has One Image.
      * @ORM\OneToOne(targetEntity="Image", cascade={"persist","remove"})
@@ -42,6 +42,7 @@ class Product
     public function __construct()
     {
         $this->menus = new ArrayCollection();
+
     }
 
     /**
@@ -60,6 +61,7 @@ class Product
     public function setMenus($menus)
     {
         $this->menus = $menus;
+
     }
 
     /**
@@ -76,6 +78,7 @@ class Product
     public function setImage($image)
     {
         $this->image = $image;
+
     }
 
 
@@ -96,7 +99,8 @@ class Product
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->title;
     }
 }

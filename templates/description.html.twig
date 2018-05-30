@@ -55,6 +55,7 @@
                     </div>
                     <div class="col">
                         {# ajouter un menu deroulant plus le bouton ajouter produit#}
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <form action="{{ path('ajouter',{'id':description.id}) }}" class="form-inline my-2 my-md-0" method="get">
                             <select name="qte" class="span1">
                                 {% for i in 1..10 %}
@@ -69,6 +70,7 @@
                                 {% endif %}
                             </div>
                         </form>
+                            {% endif %}
                     </div>
                 </div>
                 </div>

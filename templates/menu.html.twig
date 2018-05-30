@@ -38,10 +38,12 @@
                         </span>
                         <span class="right">
                              {{ menu.price|tva(menu.tva.multiplicate)|number_format(2,',',' ') }} €
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                             {% if panier[menu.id] is not defined %}
                                 <a class="btn-outline-secondary btn-sm " href="{{ path('ajouter',{'id':menu.id}) }}" style="width: 16ch">Ajouter au panier</a>
                             {% else %}
                                 <a class="btn-outline-secondary btn-sm " href="{{ path('panier') }}"   style="width: 16ch"> Déjà au panier   </a>
+                            {% endif %}
                             {% endif %}
                         </span>
                     </div>
@@ -53,19 +55,6 @@
                     <div><br></div>
                 </div>
             </div>
-
-            {#{% for menu in menu.products %}#}
-            {#<span class="titleProduct">#}
-            {#<button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top"  title="Description">Description</button>#}
-            {#<button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"  title="Add to panier" > Add </button>#}
-            {#<img  src="{{ asset ('images/')}}{{ menu.image.path }}" alt="{{ menu.image.alt }}"/>#}
-            {#</span>#}
-            {#<br>#}
-            {#{% endfor %}#}
         {% endfor %}
     </div>
-    {#<a href="{{ path('article_display', {'slug': article.slug}) }}">Voir le détail</a><br />#}
-    {#<a href="{{ path('ajout_article_panier', {'idArticle': article.id}) }}">Ajouter au panier</a><br />#}
-    {#<a href="{{ path('article_delete', {'id': article.id}) }}">Supprimer</a>#}
-    {#{% endfor %}#}
 {% endblock %}

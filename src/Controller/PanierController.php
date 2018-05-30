@@ -9,12 +9,13 @@
 namespace App\Controller;
 
 use App\Entity\Menu;
-use App\Entity\UserAdress;
 use App\Entity\UtilisateursAdresses;
 use App\Form\UtilisateurAdresseType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
+//use App\Entity\UserAdress;
 
 class PanierController extends Controller
 {

@@ -31,7 +31,8 @@
             </li>
 {#lien pour aller sur la page admin          #}
             {% if is_granted("ROLE_ADMIN") %}
-                <li class="nav-item"><a class="nav-link" href="{{ path('navAdmin') }}">Admin</a></li>
+                {#<li class="nav-item"><a class="nav-link" href="{{ path('navAdmin') }}">Admin</a></li> #}{#menu admin créer avec le crud#}{# #}
+                <li class="nav-item"><a class="nav-link" href="{{ path('admin') }}">Admin</a></li>{#menu admin avec easyAdmin#}
             {% endif %}
 {#rendu du menu déroulants des menus#}
             {{ render(controller('App\\Controller\\CategoryMenuController::categoryMenuAction')) }}
@@ -41,39 +42,10 @@
             {% endif %}
 {#barre de recherche en cour de développement #}
             {#{{ render(controller('App\\Controller\\MenuController::recherche')) }}#}
-{#menu pour l'administrateur en cour de développement#}
-            {#liste des actions de l'administarteur#}
-            {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-            {#<li class="nav-item dropdown">#}
-            {#<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown"#}
-            {#aria-haspopup="true" aria-expanded="false">Admin </a>#}
-            {#<div class="dropdown-menu" aria-labelledby="dropdown04">#}
-            {#<a class="dropdown-item" href="#">Seul</a>#}
-            {#<a class="dropdown-item" href="#">Sandwich</a>#}
-            {#<a class="dropdown-item" href="#">Americain</a>#}
-            {#</div>#}
-            {#</li>#}
-            {#{% endif %}#}
         </ul>
-{#bouton login et logout#}
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <ul class="navbar-nav mr-auto" style="position: absolute;right: 30px; float:" >
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('fos_user_profile_show') }} ">
-                        {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</a>
-                </li>
-                <li class="nav-item"  style="float: right">
-                    <a class="nav-link" href="{{ path('fos_user_security_logout') }}">
-                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                    </a>
-                </li>
-            </ul >
-        {% else %}
-            <li class="nav-item">
-                <a href="{{ path('fos_user_security_login') }}"><span class="navbar-text">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</span></a>
-                <span class="navbar-text"> / </span>
-                <a href="{{ path('fos_user_registration_register') }}"><span class="navbar-text">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</span></a>
-            </li>
-        {% endif %}
+{#rendu du menu login et logOut#}
+        {{ render(controller('App\\Controller\\AuthController::AuthAction')) }}
+
+
     </div>
 </nav>
