@@ -24,10 +24,10 @@
                 <a class="nav-link" href="{{  path('photo') }}">Photos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{#{{ path('contact') }}#}">Contact</a>
+                <a class="nav-link" href="{{ path('contact') }}">Contact</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{#{{ path('info') }}#}">Info Pratique</a>
+                <a class="nav-link" href="{{ path('info') }}">Info Pratique</a>
             </li>
 {#lien pour aller sur la page admin          #}
             {% if is_granted("ROLE_ADMIN") %}

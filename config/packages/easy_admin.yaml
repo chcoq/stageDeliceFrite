@@ -53,10 +53,12 @@ easy_admin:
                 fields:
                     - { property: 'name',label: 'Nom du menu',css_class: 'text-center',type_options: { required: true }}
                     - { property: 'price',label: 'Prix',css_class: 'text-center', help: 'Le prix doit être HT',type_options: { required: true }}
+                    - { property: 'description',label: 'Description',css_class: 'text-center',type_options: { required: true }}
+
                     - { type: 'divider' }
-                    - { property: 'tva',label: 'Tva',css_class: 'text-center', actions: ['new']}
-                    - { property: 'category',label: 'Catégorie',css_class: 'text-center'}
-                    - { property: 'products',label: 'Produit(s)',css_class: 'text-center'}
+                    - { property: 'tva',label: 'Tva',css_class: 'text-center', actions: ['new'],type_options: { required: true }}
+                    - { property: 'category',label: 'Catégorie',css_class: 'text-center',type_options: { required: true }}
+                    - { property: 'products',label: 'Produit(s)',css_class: 'text-center',type_options: { required: true }}
 
             list:
                 title: "Menus"
@@ -65,6 +67,7 @@ easy_admin:
                 fields:
                     - { property: 'name',label: 'Nom du menu',css_class: 'text-center'}
                     - { property: 'price',label: 'Prix',css_class: 'text-center'}
+                    - { property: 'description',label: 'Description',css_class: 'text-center'}
                     - { property: 'tva',label: 'Tva',css_class: 'text-center'}
                     - { property: 'category',label: 'Catégorie',css_class: 'text-center'}
                     - { property: 'products',label: 'Nombre de produit',css_class: 'text-center'}
@@ -101,10 +104,11 @@ easy_admin:
             label: 'Les Horaires'
             disabled_actions: ['new','delete','search']
             list:
+                short: ['id','ASC']
                 title: "Horaires"
                 max_results: 10
                 fields:
-                    - { property: 'id',label: 'Ordre',css_class: 'text-center'}
+#                    - { property: 'id',label: 'Ordre',css_class: 'text-center'}
                     - { property: 'jour',label: 'jour',css_class: 'text-center'}
                     - { property: 'midiDebut',label: 'Ouverture du midi',css_class: 'text-center'}
                     - { property: 'midifin',label: 'Fermeture du midi',css_class: 'text-center'}
@@ -181,16 +185,22 @@ easy_admin:
                 title: "Configuration"
                 fields:
 
-                    - { property: 'public',label: 'Activation des clients',css_class: 'text-center'}
-                    - { property: 'activateCellular',label: 'Activation du numéro de portable',css_class: 'text-center'}
-                    - { property: 'cellular',label: 'N° portable',css_class: 'text-center'}
-                    - { property: 'activateFixe',label: 'Activation du numéro de fixe',css_class: 'text-center'}
-                    - { property: 'fixe',label: 'N° fixe',css_class: 'text-center'}
+                    - { property: 'public',label: 'Activation <br> clients',css_class: 'text-center'}
+                    - { property: 'activateCellular',label: 'Activation <br> n° port.',css_class: 'text-center'}
+                    - { property: 'cellular',label: 'N°<br> portable',css_class: 'text-center'}
+                    - { property: 'activateFixe',label: 'Activation <br> n° fixe',css_class: 'text-center'}
+                    - { property: 'fixe',label: 'N°<br> fixe',css_class: 'text-center'}
+                    - { property: 'cb',label: 'Carte<br> Bleu',css_class: 'text-center'}
+                    - { property: 'sC',label: 'Sans <br>Contact',css_class: 'text-center'}
+                    - { property: 'chequeB',label: 'Cheque<br>Bancaire',css_class: 'text-center'}
+                    - { property: 'chequeD',label: 'Cheque <br>Déjeuner',css_class: 'text-center'}
+                    - { property: 'chequeT',label: 'Cheque<br> de table',css_class: 'text-center'}
+                    - { property: 'passR',label: 'Pass <br>Restaurant',css_class: 'text-center'}
+                    - { property: 'tR',label: 'Ticket <br>Restaurant',css_class: 'text-center'}
             edit:
                 fields:
                     - { property: 'cellular',label: 'N° portable',css_class: 'text-center'}
                     - { property: 'fixe',label: 'N° fixe',css_class: 'text-center'}
-    site_name: 'Delice Frites'
     design:
         brand_color: '#343a40'
         color_scheme: 'dark'

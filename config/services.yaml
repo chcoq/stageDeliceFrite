@@ -1,13 +1,14 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'en'
+    locale: 'fr'
 twig:
     globals:
         copyright: Lecocq David
         title: Delice Frites
-        adresse: 10 Rue des Poilus, Courcelles-lès-Lens, France
+        adresse: 10 Rue des Poilus,62970 Courcelles-lès-Lens, France
         phoneDF: '06 78 64 75 24'
+        key: ''
 
 services:
     # default configuration for services in *this* file

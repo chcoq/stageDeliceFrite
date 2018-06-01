@@ -14,33 +14,38 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6"><img src="{{ asset('images/Delicefrite/null.jpg') }}"></div>
+            <div style="text-align: center" class="col-6"><img class="img" src="{{ asset('images/Delicefrite/null.jpg') }}"></div>
             <div class="col-6">
                 <div class="row">
-                    <div class="col"><h3>{{ description.name }}</h3><br></div>
+                    <div class="col"><h3> {{ description.name }}</h3><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-6"> {{ description.price|tva(description.tva.multiplicate)|number_format(2,',',' ') }} €</div>
+                    <div class="col-6"> Prix: {{ description.price|tva(description.tva.multiplicate)|number_format(2,',',' ') }} €</div>
                     {#<div class="col-6"> {{ description.price|number_format(2,',',' ') }}€</div>#}
                     <div class="col-6">
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            Panier
-                        {% endif %}
+
                     </div>
 
                 </div>
                 <div class="row">
                     <div class="col">
                         <br>
-                        {{ description.description|raw }}
+                        Description: {{ description.description|raw }}
                     </div>
+                </div>
+                <div class="row">
+                    <br>
                 </div>
                 <div class="row">
                     <div class="col">
                         {% for description in description.products %}
+                            Les Produits:
                            <li style="list-style:inside"> {{ description.title }}</li>
                         {% endfor %}
                     </div>
+                </div>
+                <div class="row">
+                    <br>
                 </div>
                 <div class="row">
                     <div class="dropdown">
@@ -49,7 +54,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             {% for description in description.products %}
-                                <img  src="{{ asset ('images/')}}{{ description.image.path }}" alt="{{ description.image.alt }}"/>
+                                <img style="height: 100px; width: 100px" src="{{ asset ('images/')}}{{ description.image.path }}" alt="{{ description.image.alt }}"/>
                             {% endfor %}
                         </div>
                     </div>
@@ -70,7 +75,7 @@
                                 {% endif %}
                             </div>
                         </form>
-
+{% endif %}
                     </div>
                 </div>
                 </div>

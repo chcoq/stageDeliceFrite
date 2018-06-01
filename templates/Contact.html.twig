@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Contact{% endblock %}
+    {% block stylesheets %}
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+                background-color: grey;
+            }
+
+            section {
+                min-height: 500px;
+            }</style>{% endblock %}
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <h1>Contact </h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+            </div>
+            <div class="col-8">
+                <table class="table table-striped table-hover">
+                    {% for contact in contacts %}
+                        <thead>
+                        <h3 style="text-align: center">Nous contacter</h3>
+                        </thead>
+                        <tbody>
+
+                        {% if contact.activateFixe == true  or contact.activateCellular == true %}
+                            <tr>
+                                <th>Par téléphone:</th>
+                            </tr>
+                        {% endif %}
+
+                        {% if contact.activateFixe == true %}
+                            <tr>
+                                <td>
+                                    N° de fixe :{{ contact.fixe }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if contact.activateCellular == true %}
+                            <tr>
+                                <td>
+                                    N° de portable :{{ contact.cellular }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <th>Par mail:</th>
+                        <tr>
+                            <td>
+                                <a style="color: #343a40" href="mailto: deliceFrite@mail.fr">deliceFrite@mail.fr</a>
+                            </td>
+                        </tr>
+                        <th>Par adresse postal:</th>
+                        <tr>
+                            <td>
+                                {{ adresse }}
+                            </td>
+                        </tr>
+
+                        </td>
+                        <td>
+                        </td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

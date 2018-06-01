@@ -1,0 +1,146 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Information{% endblock %}
+    {% block stylesheets %}
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+                background-color: grey;
+            }
+
+            section {
+                min-height: 500px;
+            }</style>{% endblock %}
+{% block body %}
+    {% set carte=0 %}
+
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <h1>Information </h1>
+
+    <div class="container">
+        <div class="row">
+            {#Partie avec carte#}
+            <div class="col-6">
+                <h3 style="text-align: center">Carte</h3>
+                <div id="map"></div>
+
+
+            </div>
+{#partie avec les horaires#}
+            <div class="col-5">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <h3 style="text-align: center">Horaires</h3>
+                    <tr>
+                        <th></th>
+                        <th>Midi</th>
+                        <th>Soir</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for horaire in horaires %}
+                        <tr>
+                            <td>
+                                {{ horaire.jour }}
+                            </td>
+                            <td>
+                                {% if horaire.midiDebut is not null and  horaire.midiDebut is defined %}
+                                    De {{ horaire.midiDebut|date('H:i') }} à {{ horaire.midifin|date('H:i') }}
+                                {% else %}
+                                    Fermer
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if horaire.soirdebut is not null and  horaire.soirdebut is defined %}
+                                    De {{ horaire.soirdebut|date('H:i') }} à {{ horaire.soirfin|date('H:i') }}
+                                {% else %}
+                                    Fermer
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-1"></div>
+{#partie avec les différent moyen de paiement#}
+            <div class="col-10">
+                <table class="table table-striped table-hover">
+
+
+                    <tbody>
+                    <tr>
+                        {% for paiement in paiements %}
+                            <td style="text-align: center">
+                                {% if  paiement.cb == true %}
+                                    {% set carte = 1 %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/carteBleue.jpg') }} " alt="paiement par carte bleue" title="paiement par carte bleue">
+                                {% endif %}
+
+                                {% if  paiement.sC == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/sansContact.png') }}" alt="paiement sans contact"title="paiement sans contact">
+                                {% endif %}
+
+                                {% if  paiement.chequeB == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/chequeBancaire.png') }}" alt="paiement par chèque bancaire"title="paiement par chèque bancaire">
+                                {% endif %}
+
+                                {% if  paiement.chequeD == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/chequeDejeuner.png') }}" alt="paiement par chèque déjeuner"title="paiement par  chèque déjeuner">
+                                {% endif %}
+
+                                {% if  paiement.chequeT == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/chequeDeTable.png') }}" alt="paiement par chèque de table"title="paiement par chèque de table">
+                                {% endif %}
+
+                                {% if  paiement.passR == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/passRestaurent.png') }}" alt="paiement par pass restaurant "title="paiement par pass restaurant">
+                                {% endif %}
+
+                                {% if  paiement.tR == true %}
+                                    <img style="height:30% " src="{{ asset('/images/Delicefrite/ticketRestaurant.png') }}" alt="paiement par ticket restaurant"title="paiement par ticket restaurant">
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+    {% if  carte == 1 %}
+        <h4 style="text-align: center">Paiement par Carte Bleu à partir de 5€.</h4>
+        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-1"></div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function initMap() {
+            var uluru = {lat: 50.418196,  lng: 3.017840};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 18,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    </script>
+   <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap">
+    </script>
+{% endblock %}

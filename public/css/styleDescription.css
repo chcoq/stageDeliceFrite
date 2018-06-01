@@ -1,15 +1,17 @@
 body{
-    background-color: yellow;
+    /*background-color: yellow;*/
 }
 div
 {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
-img
+.img
 {
-    /*height: 300px;*/
+
+
+    height: 60%;
     margin: 2%;
-    width: 99%;
+    width: 60%;
     box-shadow:7px 7px 11px #181818;
 }
 

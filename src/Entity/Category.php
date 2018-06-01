@@ -53,7 +53,39 @@ class Category
 
     public function setNameCat(string $nameCat): self
     {
-        $this->nameCat = $nameCat;
+        $new = $nameCat;
+        $new = preg_replace('#Ç#', 'C', $new);
+        $new = preg_replace('#ç#', 'c', $new);
+        $new = preg_replace('#è|é|ê|ë#', 'e', $new);
+        $new = preg_replace('#È|É|Ê|Ë#', 'E', $new);
+        $new = preg_replace('#à|á|â|ã|ä|å#', 'a', $new);
+        $new = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $new);
+        $new = preg_replace('#ì|í|î|ï#', 'i', $new);
+        $new = preg_replace('#Ì|Í|Î|Ï#', 'I', $new);
+        $new = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $new);
+        $new = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $new);
+        $new = preg_replace('#ù|ú|û|ü#', 'u', $new);
+        $new = preg_replace('#Ù|Ú|Û|Ü#', 'U', $new);
+        $new = preg_replace('#ý|ÿ#', 'y', $new);
+        $new = preg_replace('#Ý#', 'Y', $new);
+        $new = preg_replace('#"#', '', $new);
+        $new = preg_replace('#-#', '', $new);
+        $new = preg_replace('#&#', '', $new);
+        $new = preg_replace('#/#', '', $new);
+        $new = preg_replace('#\'#', '', $new);
+        $new = preg_replace('#\\\#', '', $new);
+        $new = preg_replace('#~#', '', $new);
+        $new = preg_replace('#{|}#', '', $new);
+        $new = preg_replace('#\[|\]|\(|\)#', '', $new);
+        $new = preg_replace('#\|#', '', $new);
+        $new = preg_replace('#\##', '', $new);
+        $new = preg_replace('#²|`|^|@|_#', '', $new);
+        $new = preg_replace('#°|=|\+|¨|^ #', '', $new);
+        $new = preg_replace('#,|;|:|!|\?|\.|§|€|£|\$|ù|%|¤|\*|µ|>|<|\^|\^   #', '', $new);
+
+        $new = mb_strtolower($new);
+
+        $this->nameCat = $new;
 
         return $this;
     }
